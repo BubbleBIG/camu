@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OwO</title>
+    {block name="include"}{include file="public:header" /}{/block}
+    <link rel="stylesheet" type="text/css" href="_pub_/css/user.css">
+</head>
+<body>
+<div style="margin-top: 60px">
+    <div>
+        <div>
+            <div class="fixedHeader fixed">
+                <div class="contentRow">
+                    <div class="col-12 flex">
+                        <div class="col-3 leftButtons">
+                            <div class="ownLeftButtons">
+                                <ul>
+                                <li>
+                                    <a href="##">
+                                        <button class="Button iconButton editSettingsButton mr2">
+                                            <em></em>
+                                            <!-- <span class="accessibilityText">Edit settings</span> -->
+                                        </button>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <button class="Button iconButton sendProfileButton mr2">
+                                        <em></em>
+                                    </button>
+                                </li>
+                                <li>
+                                    <div class="position: relative; display: inline;">
+                                        <button class="Button iconButton userMenuButton">
+                                            <em></em>
+                                            <!-- <span class="accessibilityText">User menu</span> -->
+                                        </button>
+                                    </div>
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-6 px2">
+                            <div class="boardName relative transitionOut">
+                                <h5 class="_1XZUm yv_ub _1aUzm _35mxV _2gVa_ M0Gzd xwNdN Pt2OS">Bubble</h5>
+                            </div>
+                        </div>
+                        <div class="col-3 flex justify-end rightButtons"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top: 50px;">
+                {foreach $data as $vo}
+                    <div>用户名：{$vo.name}</div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

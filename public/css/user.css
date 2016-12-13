@@ -1,0 +1,93 @@
+.BrioProfileHeaderWrapper .fixedHeader {
+  background: rgba(255, 255, 255, 0.97);
+  top: 64px;
+  width: 100%;
+  z-index: 10; }
+
+.fixed {
+  position: fixed; }
+
+.contentRow {
+  margin: 0 auto;
+  width: 756px; }
+
+.ownLeftButtons button em {
+  display: inline-block; }
+
+.flex, .UserProfileHeader.profileHeader .header, .UserProfileHeader.profileHeader .fixedHeaderNameAndImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; }
+
+.col-12 {
+  width: 100%;
+  background-color: #fff; }
+
+.col-3 {
+  width: 25%; }
+
+.col-6 {
+  width: 50%; }
+
+.justify-end {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end; }
+
+.Button {
+  background: #fff;
+  border: none; }
+
+.editSettingsButton em {
+  width: 28px;
+  height: 24px;
+  background: url("../img/w.png") -221px -234px no-repeat;
+  font: 0 / 0 serif;
+  text-shadow: none;
+  color: transparent; }
+
+.sendProfileButton em {
+  width: 24px;
+  height: 24px;
+  background: url("../img/w.png") -50px -310px no-repeat;
+  font: 0 / 0 serif;
+  text-shadow: none;
+  color: transparent; }
+
+.userMenuButton em {
+  width: 24px;
+  height: 6px;
+  background: url("../img/w.png") -209px -296px no-repeat;
+  font: 0 / 0 serif;
+  text-shadow: none;
+  color: transparent; }
+
+.ownLeftButtons ul li {
+  display: inline-block; }
+
+.Button em {
+  outline: none;
+  position: relative;
+  vertical-align: middle; }
+
+input, textarea, keygen, select, button {
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em 0em 0em 0em;
+  font: 13.3333px Arial; }
+
+@media (min-width: 360px) {
+  .py2, .UserSettingsPage .standardForm > ul > li, .UserSettingsPage .standardForm .formSection > li {
+    padding-bottom: 8px;
+    padding-top: 8px; } }
+
+/*# sourceMappingURL=user.css.map */

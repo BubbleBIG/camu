@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OWO</title>
+    <meta charset="utf-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="_pub_/css/bootstrap.min.css">
+<link rel="stylesheet" href="_pub_/css/index.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="_pub_/js/jquery.min.js"></script>
+<script src="_pub_/js/vue.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="_pub_/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="navb">
+    <div class="row">
+      <div class="col-lg-12" style="padding-left: 10px;">
+        <div class="input-group">
+        <span class="input-group-btn">
+            <a class="" href="/camU/">
+                <img alt="Brand" src="_pub_/img/v.png">
+            </a>
+        </span>
+        <span class="input-group-btn search1 searchImg">
+            <img alt="Brand" src="_pub_/img/search.png">
+        </span>
+        <form class=" search1" role="search">
+            <input id="search1" type="text" class="form-control" placeholder="Search">
+        </form>
+        <span class="input-group-btn dropdown">
+        <a id="dLabel" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div></div><!-- <img alt="Brand" src="_pub_/img/menu.png"> --></a>
+        <ul class="dropdown-menu d-menu1" role="menu" aria-labelledby="dLabel" style="width:460px;height: 400px;margin-right: 10px;">
+        <span class="bot"></span>
+        <span class="top"></span>
+        <div>
+            <li style="height: 20px"><a href="#11">m1</a></li>
+            <li style="height: 20px">m2</li>
+            <li style="height: 20px">m3</li>
+            <li style="height: 20px">m4</li>
+        </div>
+        </ul>
+        </span>
+        <span class="input-group-btn">
+        <button id="userimg"><!-- <img src="_pub_/img/person.png"> -->
+            <div></div>
+        </button>
+        </span>
+        <span class="input-group-btn">
+        <a id="dLabel2" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><div></div><!-- <img alt="Brand" src="_pub_/img/chat.png"> --></a>
+        <div class="dropdown-menu dropdown-menu-right d-menu2" role="menu" aria-labelledby="dLabel2" style="width:340px;height: 100%;height: 570px;margin-right: px;">
+            <span class="bot"></span>
+            <span class="top"></span>
+            <ul style="overflow:auto;height: 100%;">
+                <li style="height: 200px"><a href="/camU/index/login/">m1</a></li>
+                <li style="height: 200px">m2</li>
+                <li style="height: 200px">m3</li>
+                <li style="height: 20px">m4</li>
+            </ul>
+        </div>
+        </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-12 -->
+    </div><!-- /.row -->
+    </div>
+    <!-- <div>
+        <p style="margin-top: 60px">hello</p>
+    </div> -->
+</body>
+<script type="text/javascript">
+    $(function() {
+        $('.d-menu1').click(function(){
+            event.stopPropagation();
+        });
+        $('.d-menu2').click(function(){
+            event.stopPropagation();
+        });
+    })
+</script>
+</html>

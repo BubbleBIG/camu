@@ -1,0 +1,490 @@
+
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,ul {
+  display: block;
+}
+
+audio,canvas,video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none;
+}
+
+html {
+  font-size: 100%;
+  text-size-adjust: none;
+}
+
+a:hover,
+a:active {
+  outline: 0;
+}
+
+sub,
+sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  max-width: 100%;
+  width: auto9;
+  height: auto;
+
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+#map_canvas img {
+  max-width: none;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+button,input,select,textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: middle;
+}
+button,input {
+  overflow: visible;
+  line-height: normal;
+}
+button::-moz-focus-inner,input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+button,input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+input[type='search'] {
+  box-sizing: content-box;
+  -webkit-appearance: textfield;
+}
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+body {
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+html {
+  background-color: #efefef;
+}
+
+html, body {
+  font-family: 'Helvetica Neue', Helvetica, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo,
+         'ＭＳ Ｐゴシック', arial, sans-serif;
+  color: rgb(33, 25, 34);
+  font-size: 12px;
+  height: 100%;
+}
+
+body {
+  position: relative;
+  overflow-y: scroll;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+a {
+  color: #717171;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:focus,
+a:hover {
+  color: #8a8a8a;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+  padding: 0;
+}
+
+:focus {
+  outline: #d1d1d1 auto 1px
+}
+
+button, input, select, textarea {
+  font-family: 'Helvetica Neue', Helvetica, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo,
+         'ＭＳ Ｐゴシック', arial, sans-serif;
+  font-size: 100%;
+  vertical-align: middle;
+  margin: 0px;
+}
+
+.SkipToContent {
+  display: none;
+}
+
+.AlternativesSeparator::before {
+  margin-right: 10px;
+}
+.AlternativesSeparator::after {
+  margin-left: 10px;
+}
+.AlternativesSeparator:before, .AlternativesSeparator:after {
+  background: rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  content: '';
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 37%;
+}
+.AlternativesSeparator.light {
+  color: #fff !important;
+}
+
+.AlternativesSeparatorContinuous:before, .AlternativesSeparatorContinuous:after {
+  background: rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  content: '';
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 37%;
+}
+
+.AlternativesSeparatorMobile::before {
+  margin-right: 5px;
+  padding-right: 13px;
+}
+.AlternativesSeparatorMobile::after {
+  margin-left: 5px;
+  padding-left: 13px;
+}
+.AlternativesSeparatorMobile:before, .AlternativesSeparatorMobile:after {
+  background: rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  content: '';
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 35%;
+}
+.AlternativesSeparatorMobile.light {
+  color: #fff !important;
+}
+
+.PinterestLogo {
+
+      width: 87px;
+      height: 21px;
+      background: url("_pub_img/v.png") 0px 0px no-repeat;
+      background-size: cover;
+      background-position:  36px 7px;
+      background-size: 50px 50px;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  .PinterestLogo {
+
+      background: url("_pub_img/v.png") 0px 0px no-repeat;
+      background-size: cover;
+      background-position:  36px 7px;
+      background-size: 50px 50px;
+  }
+}
+
+.Gender__customGenderTooltip:after, .customGenderTooltip:before {
+  bottom: 100%;
+  left: 92.5%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.Gender__customGenderTooltip:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.Gender__customGenderTooltip:before {
+  border-color: rgba(145, 145, 145, 0);
+  border-bottom-color: #919191;
+  border-width: 11px;
+  margin-left: -11px;
+}
+.Gender__customGenderTooltipMobile:after, .customGenderTooltip:before {
+  bottom: 100%;
+  left: 92.5%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.Gender__customGenderTooltipMobile:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-width: 10px;
+  margin-left: -10px;
+}
+.Gender__customGenderTooltipMobile:before {
+  border-color: rgba(145, 145, 145, 0);
+  border-bottom-color: #919191;
+  border-width: 11px;
+  margin-left: -11px;
+}
+.Gender__infoIconLight:focus {
+  outline:none;
+}
+.Gender__infoIconDark:focus {
+  outline:none;
+}
+
+.Gender__tooltipMessage {
+  visibility: hidden;
+}
+.Gender__tooltip:hover .Gender__tooltipMessage {
+  visibility: visible;
+}
+
+.Tooltip_message:before, .Tooltip_message:after {
+  border-style: solid;
+  content: '';
+  display: block;
+  margin-top: -8px;
+  position: absolute;
+  right: 100%;
+  top: 17px;
+  width: 0;
+}
+.Tooltip_message:before {
+  border-color: transparent rgba(0,0,0,0.48);
+  border-width: 8px 10px 8px 0;
+}
+.Tooltip_message:after {
+  border-color: transparent #fff;
+  border-width: 8px 10px 8px 0;
+  margin-right: -1px;
+}
+.Tooltip_mobileMessage:before, .Tooltip_message:after {
+  border-style: solid;
+  display: block;
+  margin-top: -8px;
+  position: absolute;
+  right: 100%;
+  top: 17px;
+  width: 0;
+}
+.Tooltip_mobileMessage:before {
+  border-color: transparent rgba(0,0,0,0.48);
+  border-width: 8px 10px 8px 0;
+}
+.Tooltip_mobileMessage:after {
+  border-color: transparent #fff;
+  border-width: 8px 10px 8px 0;
+  margin-right: -1px;
+}
+.Tooltip_wrapper {
+  position: absolute;
+  left: calc(100% + 12px);
+}
+.Tooltip_mobileWrapper {
+  margin-top: 7px;
+}
+
+.TermsOfService__light a {
+  color: rgba(255,255,255,0.9);
+}
+
+.red:hover {
+  background-color: #d50c22 !important;
+}
+.lightGrey:hover {
+  background-color: #f5f3f3 !important;
+}
+.darkGrey:hover {
+  background-color: #5e5e5e !important;
+}
+.opacityHover:hover {
+  opacity: .8;
+}
+
+.GermanyTooltip__wrapper {
+  position: absolute;
+  left: calc(100% + 12px);
+}
+.GermanyTooltip__message_right:after {
+  border: solid transparent;
+  border-right-color: #fff;
+  border-width: 8px;
+  content: '';
+  display: block;
+  margin-right: -1px;
+  margin-top: -8px;
+  position: absolute;
+  right: 100%;
+  top: 17px;
+  width: 0;
+}
+.GermanyTooltip__message_left:after {
+  border: solid transparent;
+  border-left-color: #fff;
+  border-width: 8px;
+  content: '';
+  display: block;
+  margin-right: -1px;
+  margin-top: -8px;
+  position: absolute;
+  left: 100%;
+  top: 17px;
+  width: 0;
+}
+
+.NameAgeGenderStep__tooltipMessage {
+  visibility: hidden;
+}
+.NameAgeGenderStep__tooltip:hover .NameAgeGenderStep__tooltipMessage {
+  visibility: visible;
+}
+
+
+@keyframes pinclick-save-icon {
+  0% {opacity: 1}
+  46% {opacity: 1}
+  49% {opacity: 0}
+  75% {opacity: 0}
+  100% {opacity: 1}
+}
+
+@keyframes pinclick-save {
+  0% {background-color: rgb(189, 8, 28); color: rgb(239, 239, 239)}
+  38% {background-color: rgb(189, 8, 28); color: rgb(239, 239, 239); transform: scale(1,1)}
+  40% {background-color: rgb(213, 12, 34); color: rgb(239, 239, 239); transform: scale(1.3,1.3)}
+  41% {background-color: rgb(189, 8, 28); color: rgb(239, 239, 239); transform: scale(1,1)}
+  46% {background-color: rgb(189, 8, 28); color: rgb(239, 239, 239)}
+  49% {background-color: transparent; color: transparent}
+  100% {background-color: transparent; color: transparent}
+}
+
+@keyframes pinclick-main-portrait {
+  0% {transform: translate(-38px, -98px) scale(1,1); background: transparent}
+  19% {background: transparent}
+  20% {transform: translate(-38px, -98px) scale(1,1); background: white}
+  28% {transform: translate(76px, 114px) scale(0.85,0.85); background: white}
+  46% {transform: translate(76px, 114px) scale(0.85,0.85); background: white}
+  49% {background: transparent}
+  54% {transform: translate(64.5px, 108.5px) scale(0.3,0.3); Opacity: 1}
+  70% {transform: translate(64.5px, 108.5px) scale(0.3,0.3); Opacity: 1}
+  75% {transform: translate(64.5px, 108.5px) scale(0.3,0.3); Opacity: 0}
+  91% {transform: translate(-38px, -98px) scale(1,1); background: transparent; Opacity: 0}
+  100% {transform: translate(-38px, -98px) scale(1,1); background: transparent; Opacity: 1}
+}
+
+@keyframes pinclick-main-landscape {
+  0% {transform: translate(-38px, -98px) scale(1,1); background: transparent}
+  19% {background: transparent}
+  20% {transform: translate(-38px, -98px) scale(1,1); background: white}
+  28% {transform: translate(76px, 114px) scale(0.85,0.85); background: white}
+  46% {transform: translate(76px, 114px) scale(0.85,0.85); background: white}
+  50% {background: transparent}
+  54% {transform: translate(67px, 116px) scale(0.225,0.225); Opacity: 1}
+  70% {transform: translate(67px, 116px) scale(0.225,0.225); Opacity: 1}
+  75% {transform: translate(67px, 116px) scale(0.225,0.225); Opacity: 0}
+  91% {transform: translate(-38px, -98px) scale(1,1); background: transparent; Opacity: 0}
+  100% {transform: translate(-38px, -98px) scale(1,1); background: transparent; Opacity: 1}
+}
+
+@keyframes pinclick-board {
+  0% {opacity: 0; transform: scale(0.5,0.5)}
+  46% {opacity: 0; transform: scale(0.5,0.5)}
+  54% {opacity: 1; transform: scale(1,1)}
+  100% {opacity: 1; transform: scale(1,1)}
+}
+
+@keyframes pinclick-square {
+  0% {height: 533px; border-radius: 8px 0px 0px 8px}
+  40% {height: 533px; border-radius: 8px 0px 0px 8px}
+  41% {height: 400px; border-radius: 8px}
+  80% {height: 400px; border-radius: 8px}
+  81% {height: 533px; border-radius: 8px 0px 0px 8px}
+  100% {height: 533px; border-radius: 8px 0px 0px 8px}
+}
+
+@keyframes pinclick-board-first {
+  0% {opacity: 1}
+  46% {opacity: 0}
+  54% {opacity: 0}
+  55% {opacity: 1}
+  100% {opacity: 1}
+}
+
+@keyframes pinclick-board-info {
+  0% {opacity: 0}
+  57% {opacity: 0}
+  65% {opacity: 1}
+  100% {opacity: 1}
+}
+
+.FullPageSignup__signupToggle {
+  color: #717171;
+}
+
+.FullPageSignup__signupToggle:focus,
+.FullPageSignup__signupToggle:hover  {
+  color: #8a8a8a;
+}
+
+
+.FullPageModal__scroller {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media screen and (orientation: landscape) {
+  .AppUpsellHeader__background {
+    height: 22vh;
+  }
+}
+@media screen and (orientation: portrait) {
+  .AppUpsellHeader__background {
+    height: 10vh;
+  }
+}

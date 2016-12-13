@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OwO</title>
+    {block name="include"}{include file="public:header" /}{/block}
+</head>
+<body>
+    <!-- <div style="margin-top: 60px">home</div> -->
+    <div style="display:none; color:red;font-size:16px;font-weight:bold;margin-top: 20px;" class="mess"></div>
+    <div style="margin-top: 60px;padding: 20px;">session-user-id: {$data}</div>
+    <script type="text/javascript">
+    // $(function() {
+    //     $.post("{:Url('cu')}",function(json){
+    //       // alert(json);return false;
+    //       if(json.status == 1){
+    //         $mess.slideDown(500,function(){
+    //           $mess.css('display','block');
+    //     }).html(json.message);
+    //         // }).html('标题为'+json.data.title+'信息为'+json.data.message);
+    //       }else{
+    //         $mess.slideDown(500,function(){
+    //           $mess.css('display','block');
+    //         }).html(json.message);
+
+    //         setTimeout("location='{:Url('index')}'",1500);
+    //       }
+    //     });
+    // })
+    </script>
+</body>
+</html>
