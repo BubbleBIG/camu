@@ -1,0 +1,200 @@
+    <head><link rel="stylesheet" type="text/css" href="_pub_/css/user.css"></head>
+<body>
+<div style="margin-top: 60px">
+    <div>
+        <div>
+            <div class="fixedHeader fixed">
+                <div class="contentRow">
+                    <div class="col-12 flex">
+                        <div class="col-3 leftButtons">
+                            <div class="ownLeftButtons">
+                                <ul style="margin:0;">
+                                <li class="bu" >
+                                    <a href="##">
+                                        <button class="Button iconButton editSettingsButton mr2">
+                                            <em></em>
+                                            <span class="accessibilityText">Edit settings</span>
+                                        </button>
+
+                                    </a>
+                                </li>
+                                <li class="bu" >
+                                    <button class="Button iconButton sendProfileButton mr2">
+                                        <em></em>
+                                        <span class="accessibilityText">Send Profile</span>
+                                    </button>
+                                </li>
+                                <li class="bu us" >
+                                    <div class="position: relative; display: inline;">
+                                        <button class="Button iconButton userMenuButton">
+                                            <em></em>
+                                            <span class="accessibilityText">User menu</span>
+                                        </button>
+
+                                    </div>
+                                </li>
+                                </ul>
+                                <div class="" style="margin-left: 45px;">
+                                    <div class="Module Dropdown PositionModule positionModuleElement userDropdown defaultCaret positionBottom slideIn" role="menu" aria-labelledby="dLabel" style="display:none;position: absolute;top: 64px;">
+                                        <span class="positionModuleCaret" style="left: -1px; right: 1px; margin: 0px auto;"></span>
+                                        <div class="Module UserDropdown">
+                                            <ul class="List Module" style="margin-bottom: 0;">
+                                                <li><a href="##">
+                                                    <div class="">Access business tools</div>
+                                                </a></li>
+                                                <li><a href="##">
+                                                    <div class="">Find friends</div>
+                                                </a></li>
+                                                <li><a href="##">
+                                                    <div class="">Make a widget</div>
+                                                </a></li>
+                                                <li><a href="#">
+                                                    <div class="">Get help</div>
+                                                </a></li>
+                                                <li><a href="{:Url('logout')}">
+                                                    <div class="">Logout</div>
+                                                </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 px2">
+                            <div class="boardName relative " style="">
+                                <div class="_1XZUm yv_ub _1aUzm _35mxV _2gVa_ M0Gzd xwNdN Pt2OS">{$user['name']}</div>
+                            </div>
+                        </div>
+                        <div class="col-3 flex justify-end rightButtons"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="contentRow" style="padding-top: 64px;font-weight: bold;">
+                <div class="flex flex-wrap userInformation">
+                    <div class="col-6">
+                        <div class="mr5">
+                            <div>{$user['name']}</div>
+                        </div>
+                    </div>
+                    <div class="col-6 flex">
+                        <div class="flex-auto mr2">
+                            <div class="flex mb2 mt3 infoCount">
+                                <div class="col-6">
+                                    <a href="##">
+                                        <div class="_2MT4z">
+                                            <span>
+                                                <span class="block">0</span>
+                                                <span>Followers</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="##">
+                                        <div class="_2MT4z">
+                                            <span>
+                                                <span class="block">0</span>
+                                                <span>Followering</span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-none">
+                            <div class="relative">
+                                <div style="width: 156px;height:156px">
+                                    <div class="absolute imageWash"></div>
+                                    <img src="_pub_/img/person.png" width="156px" height="156px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="contentRow py4">
+                <div class="flex flex-wrap tabBar mxn2">
+                    <a href="###">
+                        <div class="tabItem px2 py2 active">
+                            <div class="_1XZUm _2gVa_ _1sEX9 _3soYM _3En_g yv_ub">
+                                <div class="tabText">Boards</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="###">
+                        <div class="tabItem px2 py2">
+                            <div class="_1XZUm _2gVa_ _1sEX9 _3soYM _3En_g yv_ub">
+                                <div class="tabText">Pins</div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="###">
+                        <div class="tabItem px2 py2">
+                            <div class="_1XZUm _2gVa_ _1sEX9 _3soYM _3En_g yv_ub">
+                                <div class="tabText">Likes</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+    //     $('.userMenuButton').click(function() {
+    //         $('.us').addClass('h')
+    //         $('.Dropdown').show('fast');
+    //     });
+    //     // $(document).click(function(event){
+    //     //     $('.Dropdown').css('display','none');
+    //     // });
+
+    // $(document).bind("click",function(e){
+    //     var target  = $(e.target);
+    //     if(target.closest(".Dropdown").length == 0){
+    //         $(".Dropdown").hide();
+    //     }
+    // })
+    $('.userMenuButton').click(function (event) {
+         //取消事件冒泡
+         event.stopPropagation();
+         //按钮的toggle,如果div是可见的,点击按钮切换为隐藏的;如果是隐藏的,切换为可见的。
+         $('.Dropdown').slideToggle('fast');
+         $('.us').addClass('h');
+         return false;
+     });
+     //点击空白处隐藏弹出层，下面为滑动消失效果和淡出消失效果。
+     $(document).click(function(event){
+          var _con = $('.Dropdown');   // 设置目标区域
+          if(!_con.is(event.target) && _con.has(event.target).length === 0){ // Mark 1
+            $('.Dropdown').slideUp('fast');   //滑动消失
+            $('.us').removeClass('h');
+            // $('.Dropdown').hide('fast');          //淡出消失
+          }
+    });
+     $(window).scroll(function() {
+        if($(window).scrollTop() >= 45){
+            $('.boardName').addClass('transitionIn');
+            $('.boardName').removeClass('transitionOut');
+        //     $('.boardName').slideDown(300,function() {
+        //         // $('.boardName').animate({ top: '+=50px'} )
+        //     });
+
+        }else{
+            $('.boardName').removeClass('transitionIn');
+            $('.boardName').addClass('transitionOut');
+
+        //     $('.boardName').slideUp(300,function() {
+        //         // $('.boardName').animate({ top: '-=50px'} )
+        //     });
+        }
+    });
+})
+</script>
+<style type="text/css">
+    .h {
+        background: #F0F0F0;
+        border-radius:50%;
+    }
+</style>

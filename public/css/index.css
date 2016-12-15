@@ -121,7 +121,7 @@ html, body {
     background: url(../img/chat1.png) no-repeat;
     background-size: cover; }
   #navb .input-group-btn {
-    padding: 0 8px; }
+    padding: 0 16px; }
   #navb .search1 {
     background: #ebebeb; }
     #navb .search1 img {

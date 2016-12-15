@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>OWO</title>
+
     <meta charset="utf-8">
     <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" href="_pub_/css/bootstrap.min.css">
@@ -11,7 +8,6 @@
 <script src="_pub_/js/vue.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="_pub_/js/bootstrap.min.js"></script>
-</head>
 <body>
     <div id="navb">
     <div class="row">
@@ -22,7 +18,7 @@
                 <img alt="Brand" src="_pub_/img/v.png">
             </a>
         </span>
-        <span class="input-group-btn search1 searchImg">
+        <span class="input-group-btn search1 searchImg" style="padding-left: 12px">
             <img alt="Brand" src="_pub_/img/search.png">
         </span>
         <form class=" search1" role="search">
@@ -42,9 +38,11 @@
         </ul>
         </span>
         <span class="input-group-btn">
+        <a href="{:Url('boards')}">
         <button id="userimg"><!-- <img src="_pub_/img/person.png"> -->
             <div></div>
         </button>
+        </a>
         </span>
         <span class="input-group-btn">
         <a id="dLabel2" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><div></div><!-- <img alt="Brand" src="_pub_/img/chat.png"> --></a>
@@ -77,4 +75,3 @@
         });
     })
 </script>
-</html>
