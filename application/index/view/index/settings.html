@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    {block name="include"}{include file="public:header" /}{/block}
+    <link rel="stylesheet" type="text/css" href="_pub_/css/user.css">
+    <link rel="stylesheet" type="text/css" href="_pub_/css/setting.css">
+</head>
+<body>
+    <div style="padding-top: 50px;"></div>
+    <div class="Module UserSettingsPageReactWrapper fadeIn" style="min-height: 572px;">
+        <div class="DenzelReactBridge Module">
+            <div class="Module UserSettingsPage">
+                <div class="tocAndFormWrapper">
+                    <ul class="toc">
+                        <li><a href="javascript:void(0);" onClick="scorll_T(0)" class="selected e0">Account Basics</a></li>
+                        <li><a href="javascript:void(0);" onClick="scorll_T(1)" class="selected e1">Profile</a></li>
+                        <li><a href="javascript:void(0);" onClick="scorll_T(2)" class="selected e2">Other</a></li>
+                    </ul>
+                    <form action="" class="standardForm" method="POST" style="height: 1000px;">
+                        <ul class="ull rows">
+                            <li class="sectionTitle" id="accountBasics"><div><h2>Account Basics</h2></div></li>
+                        <li>
+                            <div>
+                                <label class="settingLabel"><h3>Email Address</h3></label>
+                            </div>
+                            <input type="text" id="accountBasicsEmail" name="email" value="{$u['mail']}">
+                        </li>
+                        <li>
+                            <div>
+                                <label class="settingLabel"><h3>Password</h3></label>
+                            </div>
+                            <button class="changePasswordButton ShowModalButton Button Module hasText rounded borderless" type="button" data-toggle="modal" data-target="#myModal">
+                                <span class="buttonText">Change your password...</span>
+                            </button>
+                        </li>
+                        <li>
+                            <div>
+                                <label class="settingLabel"><h3>EGender</h3></label>
+                            </div>
+                            <div>
+                                <div class="fieldsetWrapper">
+                                    <fieldset class="formInlineCheckedSet">
+                                        <ul>
+                                            <li>
+                                                <label><input class="gender" type="radio" name="gender" value="male" checked=""><span class="gender">Male</span></label>
+                                            </li>
+                                            <li>
+                                                <label><input class="gender" type="radio" name="gender" value="female"><span class="gender">Female</span></label>
+                                            </li>
+                                            <!-- <li>
+                                                <label><input type="radio" name="gender" value="unspecified"><span class="gender">Custom</span></label>
+                                            </li> -->
+                                        </ul>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <h3><label class="settingLabel">Search history</label></h3>
+                                <div>
+                                    <div>
+                                        <button aria-label="Clear Recent Searches" class="clearRecentSearches Button Module btn hasText rounded" type="button" style="margin:0;">
+                                            <span class="buttonText">Clear Recent Searches</span>
+                                        </button>
+                                        <span class="clearRecentSearchDetails">Remove things you’ve recently searched for from search suggestions</span>
+                                    </div>
+                                </div>
+                        </li>
+                        <li>
+                            <h3><label class="settingLabel">Account</label></h3>
+                            <div>
+                                <div><button aria-label="Deactivate Account" class="deactivateAccountButton Button Module btn hasText rounded" type="button" style="margin:0;"><span class="buttonText">Deactivate Account</span></button></div>
+                            </div>
+                        </li>
+                        </ul>
+                        <ul class="Module UserEdit full_page ull rows">
+                            <li class="sectionTitle" id="accountBasics"><div><h2>Profile</h2></div></li>
+                            <li>
+                                <div>
+                                    <label class="settingLabel"><h3>Name</h3></label>
+                                </div>
+                                <div>
+                                    <div data-reactid="128">
+                                        <input type="text" class="name first" id="userFirstName" name="first_name" value="{$u['name']}">
+                                        <!-- <label class="visuallyHidden" for="userLastName" data-reactid="130"><h3>Last name</h3></label>
+                                        <input type="text" class="name last" id="userLastName" name="last_name" value="" data-reactid="131"> -->
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <label class="settingLabel"><h3>Picture</h3></label>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div class="profileImageWrapper">
+                                        {if condition="$u.uimg eq ''"}
+                                        <img src="_pub_/img/person.png" width="75" height="75">
+                                        {else /}
+                                        <img src="_pub_/{$u['uimg']}" width="75" height="75">{/if}</div>
+                                        <button class="changePhoto Button Module btn hasText rounded" type="button" data-toggle="modal" data-target="#mModal">
+                                            <span class="buttonText">Change picture</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <label class="settingLabel"><h3>About you</h3></label>
+                                </div>
+                                <div>
+                                    <div>
+                                    <textarea id="userAbout" name="about">{$u['about']}</textarea>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="Module UserEdit full_page ull rows">
+                            <li class="sectionTitle" id="accountBasics" style="height: 600px"><div><h2>Other</h2></div></li>
+                        </ul>
+                        <div class="formFooter" style="position: fixed;">
+                        <div style="float: left;display:none; color:red;font-size:18px;font-weight:bold;padding:10px;margin-left:20%; " id="mess"></div>
+                            <div class="formFooterButtons">
+
+                                <button aria-label="Cancel" class="formFooterButton cancelButton NavigateButton Button Module btn hasText rounded" type="button">
+                                <a href="{:Url('boards')}">
+                                    <span class="buttonText">Cancel</span>
+                                </a>
+                                </button>
+                                <button aria-label="Save settings" class="savec formFooterButton confirmButton Button Module btn hasText rounded primary" type="button">
+                                    <span class="buttonText">Save settings</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" >
+            <div class="modal-content">
+            <form>
+              <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h1 class="modal-title" id="myModalLabel">Change your password</h1>
+              </div>
+              <div class="modal-body" style="padding:0;">
+                <ul style="margin: 0px; border-radius: 0px; box-shadow: none;">
+                    <li>
+                        <h3><label class="settingLabel">Old password</label></h3>
+                        <div>
+                            <input type="password" class="" id="changePasswordOld" name="old" value="">
+                            <!-- <button aria-label="Forgot it?" class="Button Module hasText rounded borderless" type="button">
+                            <span class="buttonText">Forgot it?</span></button> -->
+                        </div>
+                    </li>
+                    <li>
+                        <h3><label class="settingLabel">New password</label></h3>
+                        <div>
+                            <input type="password" class="" id="changePasswordNew" name="new" value="">
+                        </div>
+                    </li>
+                    <li>
+                        <h3><label class="settingLabel">Type it again</label></h3>
+                        <div>
+                            <input type="password" class="" id="changePasswordNewConfirm" name="new_confirm" value="">
+                        </div>
+                    </li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="formFooterButton cancelButton NavigateButton Button Module btn hasText rounded" data-dismiss="modal">Cancel</button>
+                <button type="button" class="formFooterButton confirmButton Button Module btn hasText rounded primary">Change Password</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div>
+        <div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="mModalLabel" aria-hidden="true">
+          <div class="modal-dialog" style="height: 120px;">
+            <div class="modal-content">
+              <form  action="{:Url('upload')}" enctype="multipart/form-data" method="post">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h1 class="modal-title" id="mModalLabel">Change your picture</h1>
+              </div>
+              <div class="modal-body" style="padding:0;">
+                <div class="ImageUploader Module">
+                    <div style="overflow: visible; float: left; position: relative; direction: ltr;" class="">
+                        <!-- <button id="upImg" aria-label="Choose photo" class="Button Module btn hasText leftRounded primary large" type="submit"><span class="buttonText">Choose photo</span></button> -->
+                        <input id="upI" title="file input" type="file" name="img">
+                        <!-- <input type="file" name="img" /> <br> -->
+                        <input id="upImg" type="submit" value="上传" />
+                    </div>
+                    <!-- <div class="uploaderProgress"><span></span></div> -->
+                </div>
+              </div>
+              <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div> -->
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <style type="text/css">
+    .UserSettingsPage .toc li a:hover{
+        color: #9c9c9c;
+    }
+    </style>
+    <script type="text/javascript">
+        function scorll_T(e){
+            $height=$(".rows:eq("+e+")").offset().top;
+            $h = $height-99;
+            $("body").animate({scrollTop:$h},400);
+
+                // $('.e'+e).css('color','#555');
+                // $('.e'+e).css('color','#555');
+                // $('.e'+e).css('color','#555');
+
+        }
+        $(function() {
+            // var $img = $('#upI').val();
+            // $.getjson("{:Url('upload')}",{},function(json){
+            //     if(json.status == 0){
+            //                 $mess.slideDown(500,function(){
+            //                   $mess.css('display','block');
+            //             }).html(json.name);
+            //               }else{
+            //                 $mess.slideDown(500,function(){
+            //                   $mess.css('display','block');
+            //                 }).html(json.message);
+            //                 // setTimeout("location='{:Url('Index/index')}'",1500);
+            //               }
+            // })
+        });
+        $('.savec').click(function() {
+            $mess = $('#mess');
+            var $em = $('#accountBasicsEmail').val();
+            var $eg = $('.gender').val();
+            var $name = $('#userFirstName').val();
+            var $ab = $('#userAbout').val();
+            console.log($em);
+            console.log($eg);
+            console.log($name);
+            console.log($em);
+            console.log($ab);
+            $.post("{:Url('changes')}",{em:$em,eg:$eg,name:$name,ab:$ab},function(json){
+                if(json.status == 0){
+                            $mess.slideDown(500,function(){
+                              $mess.css('display','block');
+                        }).html(json.message);
+                          }else{
+                            $mess.slideDown(500,function(){
+                              $mess.css('display','block');
+                            }).html(json.message);
+                            // setTimeout("location='{:Url('boards')}'",1500);
+                          }
+            })
+        })
+    </script>
+</body>
+</html>

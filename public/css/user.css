@@ -4,6 +4,9 @@
   width: 100%;
   z-index: 10; }
 
+button {
+  outline: none; }
+
 .fixed {
   position: fixed; }
 
@@ -284,5 +287,122 @@ input, textarea, keygen, select, button {
   .py2 > ul > li {
     padding-bottom: 8px;
     padding-top: 8px; } }
+.UserProfileContent {
+  position: relative; }
+
+.userBoards {
+  overflow-y: auto; }
+
+@media (min-width: 800px) {
+  .mb4 {
+    margin-bottom: 24px; } }
+.GridItems.centeredWithinWrapper {
+  margin-bottom: 14px;
+  padding-bottom: 4px; }
+
+@media (max-width: 974px) and (min-width: 650px) {
+  .ProfileGrid3col .centeredWithinWrapper {
+    width: 650px; } }
+.GridItems {
+  margin: 0 auto 14px;
+  position: relative; }
+
+.cardWrapper {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 9px;
+  padding-top: 9px; }
+
+@media (min-width: 800px) {
+  .py3 {
+    padding-bottom: 18px;
+    padding-top: 18px; } }
+.createCard {
+  background: transparent;
+  border: 0; }
+
+.GridItems .item {
+  -webkit-transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d; }
+
+.ProfileBoardCard {
+  padding: 10px; }
+
+.ProfileBoardCard:hover {
+  background: #f3f3f3;
+  overflow: hidden;
+  border-radius: 8px; }
+
+.ProfileBoardCard .createCard {
+  background: transparent;
+  border: 0; }
+
+#editButton {
+  display: none; }
+  #editButton button {
+    background: #e4e4e4; }
+  #editButton button:hover {
+    background: #D7D7D7; }
+
+#ProfileBoardCard:hover #editButton {
+  display: block; }
+
+.p0 {
+  padding: 0px 0px; }
+
+._330sB {
+  border-radius: 8px; }
+
+._2dJwQ {
+  position: relative; }
+
+._2pHR3 {
+  overflow: hidden; }
+
+.bg-super-light-gray, .UserProfilePage .UserProfileContent .User .thumbContainer {
+  background-color: #e4e4e4; }
+
+.justify-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center; }
+
+.createRep i {
+  margin: auto;
+  vertical-align: middle; }
+
+.createRep i::before {
+  width: 56px;
+  height: 56px;
+  background: url(../img/w.png) -62px -234px no-repeat;
+  display: inline-block;
+  font: 0 / 0 serif;
+  text-shadow: none;
+  color: transparent;
+  content: " "; }
+
+.cardWrapper .py2 {
+  padding: 12px 8px; }
+
+.OyBct {
+  color: #b5b5b5;
+  font-weight: bold; }
+
+._2XmQx {
+  font-size: 18px;
+  letter-spacing: -0.25px;
+  line-height: 20px;
+  word-spacing: 0; }
+
+.mt1 {
+  margin-top: 6px; }
+
+.py1 {
+  padding: 6px 8px; }
+
+.OyBct span {
+  color: #b5b5b5; }
 
 /*# sourceMappingURL=user.css.map */

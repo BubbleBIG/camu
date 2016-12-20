@@ -23,6 +23,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 use think\Session;
+use think\Cookie;
 class Login extends Controller
 {
     public function index() {
@@ -33,6 +34,7 @@ class Login extends Controller
     return view('register');
     }
     public function login() {
+        // Cookie::set('refer', $refer);
         $user = db('user');
         $name = $_POST['name'];
         $pwd = md5($_POST['pwd']);
@@ -58,6 +60,7 @@ class Login extends Controller
             // $this->redirect('Index/index');
             // return ['data'=>$u,'message'=>'登陆成功,正在跳转...','status'=>1];
             $data = array(
+                'url'=> Cookie::get('refer'),
                 'data'=>$u,
                 'message'=>'登陆成功,正在跳转...',
                 'status'=>1,

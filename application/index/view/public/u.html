@@ -1,4 +1,7 @@
-    <head><link rel="stylesheet" type="text/css" href="_pub_/css/user.css"></head>
+    <head>
+    <link rel="stylesheet" type="text/css" href="_pub_/css/user.css">
+    <link rel="stylesheet" type="text/css" href="_pub_/css/pb.css">
+    </head>
 <body>
 <div style="margin-top: 60px">
     <div>
@@ -10,7 +13,7 @@
                             <div class="ownLeftButtons">
                                 <ul style="margin:0;">
                                 <li class="bu" >
-                                    <a href="##">
+                                    <a href="{:Url('settings')}">
                                         <button class="Button iconButton editSettingsButton mr2">
                                             <em></em>
                                             <span class="accessibilityText">Edit settings</span>
@@ -105,7 +108,11 @@
                             <div class="relative">
                                 <div style="width: 156px;height:156px">
                                     <div class="absolute imageWash"></div>
+                                    {if condition="$user.uimg eq ''"}
                                     <img src="_pub_/img/person.png" width="156px" height="156px">
+                                    {else /}
+                                    <img src="_pub_/{$user.uimg}" width="156px" height="156px">
+                                    {/if}
                                 </div>
                             </div>
                         </div>
