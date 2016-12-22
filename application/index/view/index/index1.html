@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OwO</title>
+    {block name="include"}{include file="public:header" /}{/block}
+    <!-- <link rel="stylesheet" href="_pub_/js/test/css/reset.css"> -->
+    <link rel="stylesheet" href="_pub_/js/test/css/waterfall.css">
+    <!-- <script src="_pub_/js/zepto.js"></script> -->
+</head>
+<body>
+    <!-- <div style="margin-top: 60px">home</div> -->
+    <div style="display:none; color:red;font-size:16px;font-weight:bold;margin-top: 20px;" class="mess"></div>
+    <div style="margin-top: 60px;padding: 20px;"><!-- session-user-id: {$data['uid']}  name:{$data['name']} --></div>
+    <div id="container" class="waterfall-container">
+        {foreach $img as $v}
+        <div class="item" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
+            <div style="max-height: 860px;overflow: hidden;position: relative;">
+            <div class="hov">
+            <button class="Button Module ShowModalButton btn hasIcon hasText isBrioFlat primary primaryOnHover repinSmall rounded">
+                <span>save</span>
+            </button>
+            </div>
+            <div class="hov">
+            <button class="Button LikeButton Module PinLikeButton btn hasIcon isBrioFlat likeSmall rounded">
+                <span>like</span>
+            </button>
+            </div>
+            <div class="hov">
+            <div class="footmes">hello world</div>
+            </div>
+            <div class="baim">
+                <img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;">
+            </div>
+            </div>
+            <div></div>
+            <div>
+                <span>name</span>
+            </div>
+        </div>
+        {/foreach}
+        {foreach $img as $v}
+        <div class="item" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
+            <div style="max-height: 860px;overflow: hidden;position: relative;">
+            <div class="hov">
+            <button class="Button Module ShowModalButton btn hasIcon hasText isBrioFlat primary primaryOnHover repinSmall rounded">
+                <span>save</span>
+            </button>
+            </div>
+            <div class="hov">
+            <button class="Button LikeButton Module PinLikeButton btn hasIcon isBrioFlat likeSmall rounded">
+                <span>like</span>
+            </button>
+            </div>
+            <div class="hov">
+            <div class="footmes">hello world</div>
+            </div>
+            <div class="baim">
+                <img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;">
+            </div>
+            </div>
+            <div></div>
+            <div>
+                <span>name</span>
+            </div>
+        </div>
+        {/foreach}
+    </div>
+  <div id="container"></div>
+<!-- <script src="_pub_/js/test/js/libs/jquery/jquery.js"></script> -->
+<script src="_pub_/js/test/js/libs/handlebars/handlebars.js"></script>
+<script src="_pub_/js/test/js/libs/jquery.easing.js"></script>
+<script src="_pub_/js/test/js/waterfall.min.js"></script>
+<script>
+$('#container').waterfall({
+    itemCls: 'item',
+    colWidth: 250,
+    gutterWidth: 12,
+    gutterHeight: 12,
+    minCol: 3,
+    maxPage: 1,
+    checkImagesLoaded: false,
+    path: function(page) {
+        return ;
+    }
+});
+
+
+</script>
+</body>
+</html>

@@ -302,7 +302,7 @@ input, textarea, keygen, select, button {
 
 @media (max-width: 974px) and (min-width: 650px) {
   .ProfileGrid3col .centeredWithinWrapper {
-    width: 650px; } }
+    width: 684px; } }
 .GridItems {
   margin: 0 auto 14px;
   position: relative; }
@@ -347,6 +347,23 @@ input, textarea, keygen, select, button {
 
 #ProfileBoardCard:hover #editButton {
   display: block; }
+  #ProfileBoardCard:hover #editButton button {
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: -0.15px;
+    line-height: 16px;
+    word-spacing: 0;
+    background-color: #d1d1d1;
+    color: #555;
+    border: none;
+    border-radius: 3px; }
+
+#ProfileBoardCard:hover .imageWash {
+  background: rgba(0, 0, 0, 0.01); }
+
+#ProfileBoardCard:hover .px1 {
+  color: #555; }
 
 .p0 {
   padding: 0px 0px; }
@@ -404,5 +421,18 @@ input, textarea, keygen, select, button {
 
 .OyBct span {
   color: #b5b5b5; }
+
+form label p {
+  display: inline-block; }
+
+#imgshow ._1v5BH {
+  float: left; }
+
+#imgshow ._bb {
+  display: inline-block; }
+
+#waterfall-loading {
+  display: none;
+  opacity: 0; }
 
 /*# sourceMappingURL=user.css.map */

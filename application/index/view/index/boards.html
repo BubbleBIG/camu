@@ -4,6 +4,7 @@
     <title>OwO</title>
     {block name="include"}{include file="public:header" /}
     {include file="public:u" /}{/block}
+    <link rel="stylesheet" type="text/css" href="_pub_/css/setting.css">
 </head>
 <body>
 <div>
@@ -46,9 +47,9 @@
                                 <div class="cardWrapper py3" style="/*width: 301px;*/">
                                     <div class="item">
                                         <div class="ProfileBoardCard">
-                                        <button class="createCard bg-white p0">
-                                            <div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 301px; height: 200px;">
-                                                <div class="createRep flex items-center justify-center bg-super-light-gray" style="height: 200px; width: 301px;">
+                                        <button class="createCard bg-white p0"  data-toggle="modal" data-target="#mModal">
+                                            <div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 300px; height: 200px;">
+                                                <div class="createRep flex items-center justify-center bg-super-light-gray" style="height: 200px; width: 300px;">
                                                     <i></i>
                                                 </div>
                                             </div>
@@ -57,46 +58,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="cardWrapper py3" style="/*width: 301px;*/"><div draggable="true"><div class="item"><div id="ProfileBoardCard" class="ProfileBoardCard"><a href="##"><div><div class="overflow-hidden" style="height: 200px;"><div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 301px; height: 200px;"><div class="flex" style="margin: -1px;"><!-- react-text: 88 --><!-- /react-text --><div style="width: 301px;"><div class="_20us6 _2dJwQ" style="height: 252px;"><div><div class="_1v5BH _119u-" style="top: 0px; left: 0px; width: 100.333px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_1v5BH _119u-" style="top: 0px; left: 100.333px; width: 100.333px;"><div style="height: 150.5px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 148.5px;"></div></div></div><div class="_1v5BH _119u-" style="top: 0px; left: 200.667px; width: 100.333px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_1v5BH _119u-" style="top: 101px; left: 0px; width: 100.333px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_1v5BH _119u-" style="top: 101px; left: 200.667px; width: 100.333px;"><div style="height: 150.5px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 148.5px;"></div></div></div><div class="_1v5BH _119u-" style="top: 151px; left: 100.333px; width: 100.333px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div></div></div></div></div></div></div><div class="relative"><div class="flex items-center mt1 info"><div class="px1 py1 flex-auto"><div class="_2UEuS _2t4gs _2XmQx _1h4d6 _1g8Us _32TBK _1CYUe">ww</div><div class="subtitle"><div class="_2UEuS _2t4gs _2ROgJ OyBct _1g8Us"><span><span class="value">0</span> <span class="label">Pins</span></span></div></div></div><div class="flex-none ml1"><div id="editButton" class="editButton"><button class="_3VBU6 _2Et8k _1h4d6 _3Af9R _1uo1H _1qeB_ _2KmW_ _1MI7p _2LBXb _2UEuS _32TBK _25GSA _3O7DM" type="button">Edit</button></div></div></div></div></div></a></div></div></div></div>
-                                <!-- <div class="cardWrapper py3" style="width: 301px;">
-                                    <div draggable="true">
-                                        <div class="item">
-                                            <div class="ProfileBoardCard">
-                                            <a href="###">
-                                                <div>
-                                                    <div class="overflow-hidden" style="height: 200px;">
-                                                        <div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 301px; height: 200px;">
-                                                            <div class="flex" style="margin: -1px;">
-                                                                <div style="width: 301px;">
-                                                                <div class="_20us6 _2dJwQ" style="height: 252px;"><div></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="relative">
-                                                        <div class="flex items-center mt1 info">
-                                                            <div class="px1 py1 flex-auto">
-                                                                <div class="_2UEuS _2t4gs _2XmQx _1h4d6 _1g8Us _32TBK _1CYUe">ww</div>
-                                                                <div class="subtitle">
-                                                                    <div class="_2UEuS _2t4gs _2ROgJ OyBct _1g8Us">
-                                                                        <span><span class="value">0</span> <span class="label">Pins</span></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="flex-none ml1">
-                                                                <div class="editButton">
-                                                                    <button class="_3VBU6 _2Et8k _1h4d6 _3Af9R _1uo1H _1qeB_ _2KmW_ _1MI7p _2LBXb _2UEuS _32TBK _25GSA _3O7DM" type="button">Edit</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            </div>
-                                        </div>
+                                {foreach $boards as $vbo}
+                                <div class="cardWrapper py3" style="/*width: 301px;*/">
+                                <div draggable="true">
+                                <div class="item">
+                                <div id="ProfileBoardCard" class="ProfileBoardCard">
+                                <a href="##">
+                                <div>
+                                <div class="overflow-hidden" style="height: 200px;">
+                                <div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 300px; height: 200px;">
+                                <div class="flex" style="margin: -1px;"><!-- react-text: 88 --><!-- /react-text -->
+                                <div style="width: 300px;">
+                                <div class="_20us6 _2dJwQ">
+                                <div id="imgshow">
+                                {foreach $bimg as $ibo}
+                                {if condition="$ibo.bid eq $vbo.bid"}
+                                <div class="_1v5BH _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="">
+                                    <div  class="relative" style="max-height: 100px;overflow: hidden;">
+                                    <div class="imageWash absolute" style="border-radius: 5px;"></div>
+                                    <img src="_pub_/{$ibo.url}" style="width: 100%;border-radius: 5px;">
                                     </div>
-                                </div> -->
+                                </div></div>
+                                </div>
+                                {else /}
+                                <div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div>
+                                {/if}
+                                {/foreach}
+                                </div></div></div></div></div></div><div class="relative"><div class="flex items-center mt1 info"><div class="px1 py1 flex-auto"><div class="_2UEuS _2t4gs _2XmQx _1h4d6 _1g8Us _32TBK _1CYUe">{$vbo["bname"]}</div><div class="subtitle"><div class="_2UEuS _2t4gs _2ROgJ OyBct _1g8Us"><span><span class="value">0</span> <span class="label">Pins</span></span></div></div></div><div class="flex-none ml1"><div id="editButton" class="editButton"><button class="_3VBU6 _2Et8k _1h4d6 _3Af9R _1uo1H _1qeB_ _2KmW_ _1MI7p _2LBXb _2UEuS _32TBK _25GSA _3O7DM" type="button">Edit</button></div></div></div></div></div></a></div></div></div>
+                                </div>
+                                {/foreach}
                             </div>
                         </div>
                     </div>
@@ -115,9 +105,9 @@
                                 <div class="cardWrapper py3" style="/*width: 301px;*/">
                                     <div class="item">
                                         <div class="ProfileBoardCard">
-                                        <button class="createCard bg-white p0">
-                                            <div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 301px; height: 200px;">
-                                                <div class="createRep flex items-center justify-center bg-super-light-gray" style="height: 200px; width: 301px;">
+                                        <button class="createCard bg-white p0" data-toggle="modal" data-target="#mModal">
+                                            <div class="_10BCU _2pHR3 _2dJwQ _1DdPg _330sB" style="width: 300px; height: 200px;">
+                                                <div class="createRep flex items-center justify-center bg-super-light-gray" style="height: 200px; width: 300px;">
                                                     <i></i>
                                                 </div>
                                             </div>
@@ -135,8 +125,55 @@
         </div>
     </div>
 </div>
+<div>
+    <div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="mModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="height: 240px;">
+        <div class="modal-content">
+          <form  action="{:Url('createboard')}" enctype="" method="post">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h1 class="modal-title" id="mModalLabel">Create board</h1>
+              </div>
+              <div class="modal-body" style="padding:0;">
+                <ul style="margin: 0px; border-radius: 0px; box-shadow: none;">
+                    <li>
+                        <h3><label class="boardsLabel">Name</label></h3>
+                        <div>
+                            <input type="bname" class="" id="bname" name="bname" value="">
+                        </div>
+                    </li>
+                    <li>
+                        <h3><label class="boardsLabel">Secret</label></h3>
+                        <div>
+                        <!-- <label><div class="Module Checkbox fancyToggle fancyToggle styledToggle Checkbox1" style="margin: 0"><div class="slider"></div><p class="onText status">Yes</p><p class="offText status">No</p><input type="checkbox" class="Module Checkbox" id="secret" name="secret" value="on"></div></label> -->
+                        </div>
+                    </li>
+                </ul>
+              </div>
+              <div class="modal-footer" style="padding:8px">
+                <button type="button" class="formFooterButton cancelButton NavigateButton Button Module btn hasText rounded" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="formFooterButton confirmButton Button Module btn hasText rounded primary">Create</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- <script src="_pub_/js/test/js/waterfall.min.js"></script> -->
 <script type="text/javascript">
 
+// $('#container').waterfall({
+//     itemCls: 'item',
+//     colWidth: 301,
+//     gutterWidth: 25,
+//     gutterHeight: 35,
+//     minCol: 2,
+//     maxPage: 1,
+//     checkImagesLoaded: false,
+//     path: function(page) {
+//         return ;
+//     }
+// });
 </script>
 <style type="text/css">
 </style>
