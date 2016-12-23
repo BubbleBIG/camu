@@ -234,6 +234,12 @@ a:link {
   width: 156px;
   border-radius: 50%; }
 
+.imageWash2 {
+  background: rgba(0, 0, 0, 0.05);
+  height: 200px;
+  width: 200px;
+  border-radius: 50%; }
+
 .absolute {
   position: absolute; }
 

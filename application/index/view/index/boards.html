@@ -72,6 +72,15 @@
                                 <div class="_20us6 _2dJwQ">
                                 <div id="imgshow">
                                 {if !$vbo.count == 0}
+                                {if !$vbo.cover == NULL}
+                                <div class="_1v5BH _119u-" style="top: 0px; left: 0px; width: 200px;"><div style="margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="">
+                                    <div  class="relative" style="max-height: 200px;overflow: hidden;">
+                                    <div class="imageWash imageWash2 absolute" style="border-radius: 5px;"></div>
+                                    <img src="_pub_/{$vbo.cover}" style="width: 100%;border-radius: 5px;">
+                                    </div>
+                                </div></div>
+                                </div>
+                                {/if}
                                 {foreach $bimg as $ibo}
                                 {if $vbo.bid == $ibo.bid}
                                 <div class="_1v5BH _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="">
