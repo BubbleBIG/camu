@@ -302,7 +302,7 @@ input, textarea, keygen, select, button {
 
 @media (max-width: 974px) and (min-width: 650px) {
   .ProfileGrid3col .centeredWithinWrapper {
-    width: 684px; } }
+    width: 650px; } }
 .GridItems {
   margin: 0 auto 14px;
   position: relative; }
@@ -320,11 +320,6 @@ input, textarea, keygen, select, button {
 .createCard {
   background: transparent;
   border: 0; }
-
-.GridItems .item {
-  -webkit-transform: translateZ(0);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d; }
 
 .ProfileBoardCard {
   padding: 10px; }

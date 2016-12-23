@@ -37,6 +37,38 @@
         </div>
     </div>
 </div>
+<div class="aaa">
+
+</div>
+<script id="waterfall-template" >
+$(function() {
+    $.post("{:Url('test')}",function(json){
+        for (var i = json.me.length - 1; i >= 0; i--) {
+            $d = json.me[i].bname;
+            $b = json.me[i].bid;
+            $('.aaa').append('<div>'+$d+'<div class="bbb"></div></div>');
+            // console.log($d );
+            if (json.me[i].count > 0) {
+                $.post("{:Url('test2')}",{id:json.me[i].bid},function(json2){
+                for (var j = 5; j >= 0; j--) {
+                    $c = json2.me2[j].url;
+                    // if (json2.me2[j].bid ==  json.me[i].bid){
+                         $('.bbb').append('<img style="width:100px;" src="_pub_/'+$c+'"'+'>');
+                     // }
+                     console.log($c);
+                    // console.log(json2.me2[i].url);
+                }
+                // for (var i = json.me.length - 1; i >= 0; i--) {
+                //     // console.log(json.me[i].bid);
+                // }
+            })
+            }
+
+        }
+    })
+})
+
+</script>
 <script type="text/javascript">
 
 </script>

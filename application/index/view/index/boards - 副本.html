@@ -71,9 +71,8 @@
                                 <div style="width: 300px;">
                                 <div class="_20us6 _2dJwQ">
                                 <div id="imgshow">
-                                {if !$vbo.count == 0}
                                 {foreach $bimg as $ibo}
-                                {if $vbo.bid == $ibo.bid}
+                                {if $ibo.bid eq $vbo.bid}
                                 <div class="_1v5BH _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="">
                                     <div  class="relative" style="max-height: 100px;overflow: hidden;">
                                     <div class="imageWash absolute" style="border-radius: 5px;"></div>
@@ -81,11 +80,10 @@
                                     </div>
                                 </div></div>
                                 </div>
-                                {/if}
-                                {/foreach}
                                 {else /}
                                 <div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div><div class="_bb _119u-" style="top: 0px; left: 0px; width: 100px;"><div style="height: 101px; margin: 1px;"><div class="bg-super-light-gray overflow-hidden" style="height: 99px;"></div></div></div>
                                 {/if}
+                                {/foreach}
                                 <!--  -->
                                 </div></div></div></div></div></div><div class="relative"><div class="flex items-center mt1 info"><div class="px1 py1 flex-auto"><div class="_2UEuS _2t4gs _2XmQx _1h4d6 _1g8Us _32TBK _1CYUe">{$vbo["bname"]}</div><div class="subtitle"><div class="_2UEuS _2t4gs _2ROgJ OyBct _1g8Us"><span><span class="value">0</span> <span class="label">Pins</span></span></div></div></div><div class="flex-none ml1"><div id="editButton" class="editButton"><button class="_3VBU6 _2Et8k _1h4d6 _3Af9R _1uo1H _1qeB_ _2KmW_ _1MI7p _2LBXb _2UEuS _32TBK _25GSA _3O7DM" type="button">Edit</button></div></div></div></div></div></a></div></div></div>
                                 </div>
