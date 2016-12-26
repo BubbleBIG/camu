@@ -1,0 +1,230 @@
+.Grid.hasFooter {
+  padding-bottom: 22.5px; }
+
+.Grid {
+  margin: 0 auto 14px;
+  position: relative; }
+
+.GridItems.centeredWithinWrapper {
+  margin-bottom: 14px;
+  padding-bottom: 4px; }
+
+.GridItems {
+  margin: 0 auto 14px;
+  position: relative;
+  min-width: 780px; }
+
+.item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+
+.backitem {
+  padding: 10px; }
+
+.item:hover .backitem {
+  background: #f3f3f3;
+  overflow: hidden;
+  border-radius: 8px; }
+
+.GridItems.variableHeightLayout > .item {
+  position: absolute;
+  visibility: hidden; }
+
+.GridItems.padItems.variableHeightLayout > .item, .GridItems.padItems.fixedHeightLayout > .item {
+  margin: 0;
+  padding: 24px 12px; }
+
+.AddPinRep {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #888;
+  cursor: pointer;
+  display: block;
+  font-size: 15px;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+  width: 236px;
+  height: 284px; }
+
+.AddPinRep {
+  background: transparent;
+  border-radius: 8px; }
+
+a {
+  color: #717171;
+  font-weight: bold;
+  text-decoration: none; }
+
+.AddPinRep i::before {
+  width: 40px;
+  height: 40px;
+  background: url(../img/w.png) -124px -110px no-repeat;
+  display: inline-block;
+  font: 0 / 0 serif;
+  text-shadow: none;
+  color: transparent;
+  content: " "; }
+
+.AddPinRep i {
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
+
+.AddPinRep i {
+  background: #ececec;
+  border: 1px solid #cfcfcf;
+  border-radius: 50%;
+  bottom: 50%;
+  -webkit-box-shadow: 0 0 2px #fff inset;
+  box-shadow: 0 0 2px #fff inset;
+  height: 42px;
+  left: 50%;
+  margin-left: -22px;
+  margin-bottom: -8px;
+  position: absolute;
+  width: 42px; }
+
+.AddPinRep.Module i::after {
+  display: none; }
+
+.AddPinRep i::after {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  color: #b5b5b5;
+  content: '+';
+  display: block;
+  font-family: sans-serif;
+  font-size: 31px;
+  line-height: 31px;
+  font-style: normal;
+  position: absolute;
+  top: 6px;
+  text-align: center; }
+
+a:focus, a:hover {
+  color: #555;
+  text-decoration: none; }
+
+.AddPinRep span {
+  left: 0;
+  margin-top: 18px;
+  position: absolute;
+  right: 0;
+  top: 50%; }
+
+.Pin.summary {
+  width: 236px; }
+
+.Pin.summary {
+  background: #fff;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 6px;
+  width: 236px;
+  display: inline-block; }
+
+.Pin {
+  background-color: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important; }
+
+.Pin {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  font-size: 11px;
+  position: relative;
+  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg); }
+
+.Pin.summary:not(.hideHoverUI) .pinWrapper::before {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  content: " " !important;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  -webkit-transform: scale(0.96);
+  -ms-transform: scale(0.96);
+  transform: scale(0.96);
+  width: 100%;
+  z-index: 3; }
+
+.pinMetaWrapper {
+  position: relative;
+  cursor: zoom-in;
+  margin: -10px;
+  padding: 10px; }
+
+.Pin.summary .pinHolder {
+  cursor: pointer; }
+
+.Pin.summary .pinHolder {
+  position: relative;
+  z-index: 3; }
+
+.Pin.summary .pinHolder::after {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  bottom: 0;
+  content: " ";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 5; }
+
+.Pin.summary .pinImageWrapper {
+  border-radius: 6px 6px 0 0;
+  background: #eee;
+  display: block;
+  padding: 0;
+  position: relative; }
+
+.Pin.summary .pinImageWrapper::after {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  bottom: 0;
+  content: "";
+  height: 1px;
+  left: 0;
+  margin-top: -1px;
+  position: absolute;
+  right: 0;
+  z-index: 10; }
+
+.Pin .pinImageWrapper::after {
+  display: none; }
+
+.Pin.summary .pinUiImage {
+  margin: auto; }
+
+.Image {
+  max-width: 100%;
+  position: relative; }
+
+.Pin.summary .pinImg.loaded {
+  opacity: 1; }
+
+.Pin.summary .pinImg {
+  display: block;
+  margin: 0 auto;
+  z-index: 5;
+  opacity: 0; }
+
+/*# sourceMappingURL=user2.css.map */

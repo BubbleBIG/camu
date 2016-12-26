@@ -191,12 +191,12 @@
                 <h1 class="modal-title" id="mModalLabel">Change your picture</h1>
               </div>
               <div class="modal-body" style="padding:0;">
-                <div class="ImageUploader Module">
+                <div class="ImageUploader Module" align="center">
                     <div style="overflow: visible; float: left; position: relative; direction: ltr;" class="">
                         <!-- <button id="upImg" aria-label="Choose photo" class="Button Module btn hasText leftRounded primary large" type="submit"><span class="buttonText">Choose photo</span></button> -->
-                        <input id="upI" title="file input" type="file" name="img">
+                        <input id="upI" title="file input" type="file" name="img" style="width: 350px;margin-right:20px; ">
                         <!-- <input type="file" name="img" /> <br> -->
-                        <input id="upImg" type="submit" value="上传" />
+                        <button class="formFooterButton confirmButton Button Module btn hasText rounded primary" id="upImg" type="submit" style="float">上传</button>
                     </div>
                     <!-- <div class="uploaderProgress"><span></span></div> -->
                 </div>
@@ -262,7 +262,7 @@
                             $mess.slideDown(500,function(){
                               $mess.css('display','block');
                             }).html(json.message);
-                            // setTimeout("location='{:Url('boards')}'",1500);
+                            setTimeout("location='{:Url('boards')}'",1500);
                           }
             })
         })

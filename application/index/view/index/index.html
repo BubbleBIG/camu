@@ -3,52 +3,88 @@
 <head>
     <title>OwO</title>
     {block name="include"}{include file="public:header" /}{/block}
+    <!-- <link rel="stylesheet" href="_pub_/js/test/css/reset.css"> -->
+    <link rel="stylesheet" href="_pub_/js/test/css/waterfall.css">
     <!-- <script src="_pub_/js/zepto.js"></script> -->
-<script src="_pub_/js/jquery.waterfall.js"></script>
 </head>
 <body>
     <!-- <div style="margin-top: 60px">home</div> -->
     <div style="display:none; color:red;font-size:16px;font-weight:bold;margin-top: 20px;" class="mess"></div>
     <div style="margin-top: 60px;padding: 20px;"><!-- session-user-id: {$data['uid']}  name:{$data['name']} --></div>
-    <div style="min-width: 780px;margin: 0 1%;">
-    <div id="waterfall1" class="waterfall" data-col-min-width="230"
-    data-default-container-width="230"
-    data-autoresize="true" style="padding:5px 0px;margin:0 auto;position: relative;" align="center">
+    <div id="container" class="waterfall-container">
         {foreach $img as $v}
-            <div style="margin:5px;padding:1%;border-radius: 8px;background: #f5f5f5;">
-                <div style="background: #f5f5f5;border-radius: 8px;"><img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;"></div>
+        <div class="item" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
+            <div style="max-height: 860px;overflow: hidden;position: relative;">
+            <div class="hov">
+            <button class="Button Module ShowModalButton btn hasIcon hasText isBrioFlat primary primaryOnHover repinSmall rounded">
+                <span>save</span>
+            </button>
+            </div>
+            <div class="hov">
+            <button class="Button LikeButton Module PinLikeButton btn hasIcon isBrioFlat likeSmall rounded">
+                <span>like</span>
+            </button>
+            </div>
+            <div class="hov">
+            <div class="footmes">hello world</div>
+            </div>
+            <div class="baim">
+                <img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;">
+            </div>
+            </div>
+            <div></div>
+            <div>
                 <span>name</span>
             </div>
-
+        </div>
+        {/foreach}
+        {foreach $img as $v}
+        <div class="item" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
+            <div style="max-height: 860px;overflow: hidden;position: relative;">
+            <div class="hov">
+            <button class="Button Module ShowModalButton btn hasIcon hasText isBrioFlat primary primaryOnHover repinSmall rounded">
+                <span>save</span>
+            </button>
+            </div>
+            <div class="hov">
+            <button class="Button LikeButton Module PinLikeButton btn hasIcon isBrioFlat likeSmall rounded">
+                <span>like</span>
+            </button>
+            </div>
+            <div class="hov">
+            <div class="footmes">hello world</div>
+            </div>
+            <div class="baim">
+                <img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;">
+            </div>
+            </div>
+            <div></div>
+            <div>
+                <span>name</span>
+            </div>
+        </div>
         {/foreach}
     </div>
-    </div>
-    <script type="text/javascript">
-    $(function(){
-    // $(".waterfall").waterfall({
-    //     colMinWidth: 200,
-    // defaultContainerWidth: 200,
-    // autoresize: true
-    // });
-})
+  <div id="container"></div>
+<!-- <script src="_pub_/js/test/js/libs/jquery/jquery.js"></script> -->
+<script src="_pub_/js/test/js/libs/handlebars/handlebars.js"></script>
+<script src="_pub_/js/test/js/libs/jquery.easing.js"></script>
+<script src="_pub_/js/test/js/waterfall.min.js"></script>
+<script>
+$('#container').waterfall({
+    itemCls: 'item',
+    colWidth: 250,
+    gutterWidth: 12,
+    gutterHeight: 12,
+    minCol: 3,
+    maxPage: 1,
+    checkImagesLoaded: false,
+    path: function(page) {
+        return ;
+    }
+});
 
-    // $(function() {
-    //     $.post("{:Url('cu')}",function(json){
-    //       // alert(json);return false;
-    //       if(json.status == 1){
-    //         $mess.slideDown(500,function(){
-    //           $mess.css('display','block');
-    //     }).html(json.message);
-    //         // }).html('标题为'+json.data.title+'信息为'+json.data.message);
-    //       }else{
-    //         $mess.slideDown(500,function(){
-    //           $mess.css('display','block');
-    //         }).html(json.message);
 
-    //         setTimeout("location='{:Url('index')}'",1500);
-    //       }
-    //     });
-    // })
-    </script>
+</script>
 </body>
 </html>

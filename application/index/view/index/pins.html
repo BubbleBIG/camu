@@ -4,6 +4,8 @@
     <title>OwO</title>
     {block name="include"}{include file="public:header" /}
     {include file="public:u" /}{/block}
+    <link rel="stylesheet" type="text/css" href="_pub_/css/setting.css">
+    <link rel="stylesheet" type="text/css" href="_pub_/css/user2.css">
 </head>
 <body>
 <div>
@@ -37,42 +39,161 @@
         </div>
     </div>
 </div>
-<div class="aaa">
-
+<div class="Module UserProfileContent">
+    <div class="Grid Module hasFooter">
+        <div id="container" class="GridItems Module centeredWithinWrapper padItems variableHeightLayout">
+            <div class="item activeItem ui-draggable ui-draggable-disabled ui-state-disabled" style="top: 0px; left: 20px; transition: none; visibility: visible;margin-left:-13px; ">
+                <div class="backitem">
+                    <a class="AddPinRep ModalTrigger Module" data-toggle="modal" data-target="#mModal" href="##">
+                        <i></i>
+                        <span>Save Pin</span>
+                    </a>
+                </div>
+            </div>
+            {foreach $bimg as $ibo}
+            <div class="item ui-draggable ui-draggable-disabled ui-state-disabled" style="top: 0px; left: 260px; transition: none; visibility: visible;" aria-disabled="true">
+                <div class="Module Pin pinActionBarStickyContainer pinWithSocialCounts summary">
+                    <div class="pinWrapper">
+                        <div class="bulkEditPinWrapper"></div>
+                        <div class="pinImageActionButtonWrapper">
+                            <div class="pinHolder">
+                            <a href="##" class="pinImageWrapper draggable" data-element-type="35" style="background: ;">
+                            <div class="pinDomain hidden">Uploaded by user</div>
+                            <div class="fadeContainer">
+                            <div class="hoverMask"></div>
+                            <div class="Image Module pinUiImage" style="width: 192px">
+                            <div class="heightContainer" style=""><img src="_pub_/{$ibo.url}" class="pinImg loaded fade" onload="" alt=" " style="width: 100%"></div></div></div>
+                            </a>
+                            </div>
+                        </div>
+                        <div class="pinMetaWrapper"></div>
+                        <div class="pinCredits"></div>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
 </div>
-<script id="waterfall-template" >
-$(function() {
-    $.post("{:Url('test')}",function(json){
-        for (var i = json.me.length - 1; i >= 0; i--) {
-            $d = json.me[i].bname;
-            $b = json.me[i].bid;
-            $('.aaa').append('<div>'+$d+'<div class="bbb"></div></div>');
-            // console.log($d );
-            if (json.me[i].count > 0) {
-                $.post("{:Url('test2')}",{id:json.me[i].bid},function(json2){
-                for (var j = 5; j >= 0; j--) {
-                    $c = json2.me2[j].url;
-                    // if (json2.me2[j].bid ==  json.me[i].bid){
-                         $('.bbb').append('<img style="width:100px;" src="_pub_/'+$c+'"'+'>');
-                     // }
-                     console.log($c);
-                    // console.log(json2.me2[i].url);
-                }
-                // for (var i = json.me.length - 1; i >= 0; i--) {
-                //     // console.log(json.me[i].bid);
-                // }
-            })
-            }
-
-        }
-    })
-})
-
-</script>
+<div>
+    <div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="mModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="height: 460px;width: 480px">
+        <div class="modal-content">
+          <form  action="{:Url('uploadpin')}" enctype="multipart/form-data" method="post">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h1 class="modal-title" id="mModalLabel">Upload a Pin</h1>
+          </div>
+          <div class="modal-body" style="padding:0;">
+            <div class="ImageUploader Module" align="center" style="">
+                <div style="" class="">
+                    <!-- <button id="upImg" aria-label="Choose photo" class="Button Module btn hasText leftRounded primary large" type="submit"><span class="buttonText">Choose photo</span></button> -->
+                    <input id="upI" title="file input" type="file" name="img" style="width: 350px;margin-right:20px; ">
+                    <button class="formFooterButton confirmButton Button Module btn hasText rounded primary" id="upImg" type="submit" style="">上传</button>
+                    <div id="mainpins" style="height: 345px;" v-cloak>
+                        <div class="bar">
+                            <label class="searchLabel">Choose Board</label>
+                            <input type="text" v-model="searchStr" placeholder="Enter your search board" class="searchBname"/>
+                        </div>
+                        <ul style="overflow:auto;height: 89%;">
+                            <li v-for="a in articles | searchFor searchStr" style="width: 110px;padding: 0;" align="center">
+                            <input type="radio" id="pins-save{{a.id}}" name="pinssave" value="{{a.id}}" style="opacity: 0;height: 1px">
+                            <label :class="{'cke': a.active}" name="{{a.title}}" for="pins-save{{a.id}}" style="width: 60px;height: 60px;padding: 4px;margin: 0;overflow: hidden;" @click="makeActive(a, $index)">
+                            <span type="button" style="display:block;width: 40px;height: 40px;overflow: hidden;border:none;border-radius:4px;" data-toggle="tooltip" data-placement="top" title="{{a.title}}"><img :src="a.image" style="width: 100%" /></span>
+                                <p>{{a.title}}</p>
+                            </label>
+                            </li>
+                        </ul>
+                        <script type="text/javascript">
+                            Vue.filter('searchFor', function (value, searchStr) {
+                                var result = [];
+                                if(!searchStr){
+                                    return value;
+                                }
+                                searchStr = searchStr.trim().toLowerCase();
+                                result = value.filter(function(item){
+                                    if(item.title.toLowerCase().indexOf(searchStr) !== -1){
+                                        return item;
+                                    }
+                                });
+                                return result;
+                            });
+                            var demo = new Vue({
+                                el: '#mainpins',
+                                data: {
+                                    searchStr: "",
+                                    articles: [
+                                        {foreach $boards as $vbo}
+                                        {
+                                            "title": "{$vbo.bname}",
+                                            "id": "{$vbo.bid}",
+                                            {if $vbo.cover == null}
+                                            "image": "_pub_/img/pg.png",
+                                            {else /}
+                                            "image": "_pub_/{$vbo.cover}",
+                                            {/if}
+                                            active:false,
+                                        },
+                                        {/foreach}
+                                    ],
+                                },
+                                 methods: {
+                                    makeActive: function(articles, index){
+                                            for(var i=0; i<this.articles.length;i++){
+                                              this.articles[i].active = false;
+                                            }
+                                            this.articles[index].active = true;
+                                    }
+                                  }
+                            });
+                        </script>
+                        <style type="text/css">
+                        #mainpins ul li {display: inline-block;}
+                        .ImageUploader label:hover {background: #eee;}
+                            .cke{background:#e35885;border-radius: 4px;}
+                        }
+                        }
+                        </style>
+                    </div>
+                </div>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="aaa">
+<div>
+  <input type="radio" id="nba" name="sport" value="nba">
+  <label name="nba" for="nba">NBA</label>
+  <input type="radio" id="cba" name="sport" value="cba">
+  <label name="cba" for="cba">CBA</label>
+</div>
+</div>
+<script src="_pub_/js/test/js/waterfall.min.js"></script>
 <script type="text/javascript">
-
+$('#container').waterfall({
+    itemCls: 'item',
+    colWidth: 236,
+    gutterWidth: 15,
+    gutterHeight: -20,
+    minCol: 3,
+    maxPage: 1,
+    checkImagesLoaded: false,
+    path: function(page) {
+        return ;
+    }
+});
 </script>
-<style type="text/css">
-</style>
+<script>
+// $(function() {
+//   $('label').click(function(){
+//     var radioId = $(this).attr('name');
+//     $('label').removeAttr('class') && $(this).attr('class', 'checked');
+//     $('input[type="radio"]').removeAttr('checked') && $('#' + radioId).attr('checked', 'checked');
+//   });
+// });
+</script>
 </body>
 </html>

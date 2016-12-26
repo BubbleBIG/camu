@@ -31,7 +31,11 @@ class Index extends Common
         $u = db('user')->where('uid',$uid)->find();
         $this->assign('user',$u);
         $data=Db::table('user')->where('age','>',1)->select();
-
+        $boards = db('boards')->where('uid',Session::get('uid'))->order('bid desc')->select();
+        $imgb = db('img')->where('uid',Session::get('uid'))->order('iid desc')->select();
+        // dump($imgb);
+        $this->assign('boards',$boards );
+        $this->assign('bimg',$imgb);
         $this->assign('data',$data);
             // dump($data);
             // return $this->fetch('user');
@@ -40,22 +44,22 @@ class Index extends Common
     public function boards() {
         $a = new Index();
         $a->user();
-        $boards = db('boards')->where('uid',Session::get('uid'))->order('bid desc')->select();
-        $imgb = db('img')->where('uid',Session::get('uid'))->order('iid desc')->select();
-        foreach($boards as $key=>$board){
+        // $boards = db('boards')->where('uid',Session::get('uid'))->order('bid desc')->select();
+        // $imgb = db('img')->where('uid',Session::get('uid'))->order('iid desc')->select();
+        // foreach($boards as $key=>$board){
             // $imgb = db('img')->where('bid',$board['bid'])->order('iid desc')->limit(6)->select();
             // $this->assign('bimg',$imgb);
             // dump($imgb);
-        }
+        // }
         // $boa = Db::field('bo.name,role.title')
         //         ->table(['boards'=>'bo','img'=>'im'])
         //         ->limit(10)->select();
         // $imgb = db('img')->where('bid',$boards['id'])->order('id desc')->limit(4)->select();
         // $this->assign('bimg',$imgb);
         // $databn = array('name' => $boards['bname'], );
-        $this->assign('boards',$boards );
+        // $this->assign('boards',$boards );
         // dump($user);
-        $this->assign('bimg',$imgb);
+        // $this->assign('bimg',$imgb);
         // dump($imgb);
         return $this->fetch('boards');
     }
@@ -94,6 +98,48 @@ class Index extends Common
             return ['status'=>1,'message'=>'successful'];
         }
     }
+    public function uploadpin(){
+        $file = request()->file('img');
+        $bid = $_POST['pinssave'];
+        $info = $file->rule('md5')->move(ROOT_PATH . 'public' . DS . 'uploads');
+        if($info){
+            $url = str_replace('\\','/',$info->getSaveName());
+            $un = ('uploads'."/").$url;
+            dump($un);
+            dump($bid);
+            $datapinsinsert = array(
+                'bid' => $bid,
+                'url' => $un,
+                'uid' => Session::get('uid'),
+                );
+            $count = db('img')->where('bid',$bid)->count();
+            dump($count);
+            $pinsinsert = db('img')->insert($datapinsinsert);
+            $boardsupdate = db('boards')->where('bid',$bid)->update(['count'=>$count+1]);
+            if ($boardsupdate && $pinsinsert) {
+                # code...
+                $this->redirect('pins');
+            }else {
+                echo $file->getError();
+            return $file->getError();
+            }
+            // $uid = Session::get('uid');
+            // return ['mess'=>$un];
+            // $u = db('img')->insert(['uimg' => $un]);
+            // 输出 42a79759f284b767dfcb2a0197904287.jpg
+            // echo $info->getFilename();
+            // $data = array(
+            //     'img' => $u,
+            //     // 'name' => $info->getSaveName(),
+            //     // 'aa' => $info->getFilename(),
+            //     'status'=>0,
+            //     );
+        }else{
+            // 上传失败获取错误信息
+            echo $file->getError();
+            return $file->getError();
+        }
+    }
     public function upload(){
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file('img');
@@ -105,8 +151,8 @@ class Index extends Common
             // 输出 jpg
             // echo $info->getExtension();
             // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
-            $url = $info->getSaveName();
-            $un = ('uploads'."\\").$url;
+            $url = str_replace('\\','/',$info->getSaveName());
+            $un = ('uploads'."/").$url;
             echo $un;
             $uid = Session::get('uid');
             $u = db('user')->where('uid',$uid)->update(['uimg' => $un]);
@@ -138,7 +184,54 @@ class Index extends Common
         }else {
             $this->redirect('boards');
         }
-        dump($datab);
+        // dump($datab);
+    }
+    public function changesboard() {
+        $uid = Session::get('uid');
+        $bid = $_POST['bid'];
+        $bname = $_POST['bname'];
+        $description = $_POST['description'];
+        $datab = array(
+            'bdescription' => $description,
+            'bname' => $bname,
+            );
+        $map['bid'] = $bid;
+        $map['uid'] = $uid;
+        // dump($description);
+        $info = db('boards')->where($map)->update($datab);
+        if ($info == null) {
+            return $info->getError();
+        }else {
+            $this->redirect('boards');
+        }
+        // dump($datab);
+    }
+    public function changecover() {
+        $uid = Session::get('uid');
+        $bid = $_POST['bid'];
+        $delb['bid'] = $bid;
+        $delb['uid'] = $uid;
+        // return ['mess'=>$bid ];
+        $imgforcover = db('img')->where($delb)->select();
+        if ($imgforcover) {
+            return ['covers'=>$imgforcover];
+        }else {
+            return ['mess'=>$bid ];
+        }
+    }
+    public function delboard() {
+        $uid = Session::get('uid');
+        $bid = $_POST['bid'];
+        $delb['bid'] = $bid;
+        $delb['uid'] = $uid;
+        // return [$bid];
+        $delboard = db('boards')->where($delb)->delete();
+        $delboardpins = db('img')->where($delb)->delete();
+        if ($delboard || $delboardpins) {
+            return ['mess'=>'successful!','status'=>1];
+        }else {
+            return ['mess'=>'erro!','status'=>0];
+        }
     }
     public function sImg() {
         $id = $_POST['id'];
