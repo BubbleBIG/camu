@@ -4,9 +4,23 @@
     <title>OwO</title>
     {block name="include"}{include file="public:header" /}
     {include file="public:u" /}{/block}
+    <link rel="stylesheet" type="text/css" href="_pub_/css/swiper.min.css" />
     <link rel="stylesheet" type="text/css" href="_pub_/css/setting.css">
 </head>
 <body>
+<style>
+    .swiper-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -150px;
+        margin-top: -150px;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+    }
+    </style>
 <div>
     <div>
         <div>
@@ -131,7 +145,7 @@
                                                 </li><li class="boardEditCover">
                                                     <h3>Cover</h3>
                                                     {if $vbo.count > 0}
-                                                    <div class="boardCoverEdit{$vbo['bid']}"><button aria-label="Change" class="boardCoverEditButton Button Module btn hasText rounded" type="button" data-toggle="modal" data-target="#cModal{$vbo['bid']}"><span class="buttonText">Change</span></button></div>
+                                                    <div class="boardCoverEdit{$vbo['bid']}"><button aria-label="Change" class="boardCoverEditButton Button Module btn hasText rounded" type="button" data-toggle="modal" data-target="#cModal"><span class="buttonText">Change</span></button></div>
                                                     {/if}
                                                 </li>
                                                 <li>
@@ -152,7 +166,7 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <div class="modal fade" id="cModal{$vbo['bid']}" tabindex="-1" role="dialog" aria-labelledby="cModalLabel{$vbo['bid']}" aria-hidden="true">
                                       <div class="modal-dialog" style="width: 700px;height: 440px;">
                                         <div class="modal-content">
@@ -164,7 +178,7 @@
                                               <div class="modal-body" style="padding:0;">
                                                 <div id="coverselect{$vbo.bid}" v-cloak>
                                                 <ul>
-                                                <li v-for="a in items">{{a.id}}</li>
+                                                <li v-for="a in items" style="width: 270px;height: 200px;overflow: hidden;"><img :src="a.url" style="width: 100%" />{{a.id}}</li>
                                                 </ul>
                                                 </div>
                                               </div>
@@ -176,7 +190,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <script type="text/javascript">
                                     function del_confirm{$vbo['bid']}() {
                                         var r=confirm("Sure to delete this board?")
@@ -200,52 +214,65 @@
                                         }
                                     }
                                     $(".boardCoverEdit{$vbo['bid']}").click(function() {
-                                        $("#myModal{$vbo['bid']}").hide();
+                                        // $("#myModal{$vbo['bid']}").hide();
                                         var $bid = $(".boardbid{$vbo['bid']}").val();
                                         var $mess = $('#mess');
-                                    //     $.post("{:Url('changecover')}",{bid:$bid},function(json) {
-                                    //         // console.log(json.covers);
-                                    //         // var $covers = json.covers.length;
-
-                                    //         if (json.status == 1) {
-                                    //             for (var i = json.covers.length - 1; i >= 0; i--) {
-                                    //                 $ac = json.covers[i].url;
-                                    //                 console.log($ac);
-                                                    var vm = new Vue({
-                                                    el:'#coverselect{$vbo.bid}',
-                                                    data: {
-                                                      items: [
-                                                      {foreach $bimg as $ibo}
-                                                      {if $vbo.bid == $ibo.bid}
-                                                        {
-                                                            id: "{$ibo.iid}",
-                                                            url: "{$ibo.url}",
-
-                                                        },
-                                                      {/if}
-                                                      {/foreach}
-                                                      ]
-                                                    },
-                                                  //   methods: {
-                                                  //   makeActive: function(item, index){
-                                                  //     this.active = item.name;
-                                                  //           for(var i=0; i<this.items.length;i++){
-                                                  //             this.items[i].active = false;
-                                                  //           }
-                                                  //           this.items[index].active = true;
-                                                  //   }
-                                                  // }
+                                        $.post("{:Url('changecover')}",{bid:$bid},function(json) {
+                                            if (json.status == 1) {
+                                                console.log(json.mess);
+                                            }else{
+                                                var apiURL = '';
+                                                var vm = new Vue({
+                                                    el:'#coverselect',
+                                                    created: function () {
+                                                    this.fetchData()
+                                                  },
+                                                  methods: {
+                                                    fetchData: function () {
+                                                      var xhr = new XMLHttpRequest()
+                                                      var self = this
+                                                      xhr.open('GET', apiURL + self.currentBranch)
+                                                      xhr.onload = function () {
+                                                        self.commits = JSON.parse(xhr.responseText)
+                                                        console.log(self.commits[0].html_url)
+                                                      }
+                                                      xhr.send()
+                                                    }
+                                                  }
                                                 });
-                                    //               }
-                                    //              $mess.slideDown(500,function(){
-                                    //                               $mess.css('display','block');
-                                    //                         }).html(json.mess);
-                                    //         }else {
-                                    //             $mess.slideDown(500,function(){
-                                    //                               $mess.css('display','block');
-                                    //                         }).html(json.mess);
-                                    //         }
-                                    //     })
+                                                // for (var i = json.data.length - 1; i >= 0; i--) {
+                                                //     $u = json.data[i].url;
+                                                //     $bid = json.data[i].bid;
+                                                //     $('.swiper-wrapper').append('<div class="swiper-slide" style="width: 240px;height:200px;overflow:hidden;background-image:url(_pub_/'+$u+')"></div>')
+                                                //     // console.log($u);
+                                                // }
+                                            }
+                                        });
+                                        var vm = new Vue({
+                                        el:'#coverselect',
+                                        // data: {
+                                        //   items: [
+                                        //   {foreach $bimg as $ibo}
+                                        //   {if $vbo.bid == $ibo.bid}
+                                        //     {
+                                        //         id: "{$ibo.iid}",
+                                        //         url: "_pub_/{$ibo.url}",
+
+                                        //     },
+                                        //   {/if}
+                                        //   {/foreach}
+                                        //   ]
+                                        // },
+                                      //   methods: {
+                                      //   makeActive: function(item, index){
+                                      //     this.active = item.name;
+                                      //           for(var i=0; i<this.items.length;i++){
+                                      //             this.items[i].active = false;
+                                      //           }
+                                      //           this.items[index].active = true;
+                                      //   }
+                                      // }
+                                    });
                                     })
                                     $(".formFooterButton{$vbo['bid']}").click(function() {
                                         $("#myModal{$vbo['bid']}").show();
@@ -324,7 +351,32 @@
       </div>
     </div>
 </div>
+<div>
+    <div class="modal fade" id="cModal" tabindex="-1" role="dialog" aria-labelledby="cModalLabel" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog" style="width: 700px;height: 440px;">
+        <div class="modal-content">
+          <form  action="" enctype="" method="post">
+              <div class="modal-header">
+                <button type="button" class="close formFooterButton" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h1 class="modal-title" id="mModalLabel">Change Board Cover</h1>
+              </div>
+              <div class="modal-body" style="padding:0;height: 300px">
+                <div id="coverselect" class="swiper-container" style="width: 240px">
+                <div class="swiper-wrapper" style="">
+                </div>
+                <div class="swiper-pagination"></div>
+                </div>
+              </div>
+              <div class="modal-footer" style="padding:8px"><a type="button" class="formFooterButton cancelButton NavigateButton Button Module btn hasText rounded" data-dismiss="" href="{:Url('boards')}">Cancel</a>
+                <button aria-label="Save change" class="change savec formFooterButton confirmButton Button Module btn hasText rounded primary" type="button"><span class="buttonText">Save change</span></button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
 <script src="_pub_/js/test/js/waterfall.min.js"></script>
+<script type="text/javascript" src="_pub_/js/swiper.min.js"></script>
 <script type="text/javascript">
 $('#container').waterfall({
     itemCls: 'item',
@@ -338,43 +390,53 @@ $('#container').waterfall({
         return ;
     }
 });
-
-function del_confirm() {
-    var r=confirm("Sure to delete this board?")
-    if (r==true) {
-        var $bid = $('.boardbid').val();
-        var $mess = $('#mess');
-        $.post("{:Url('delboard')}",{bid:$bid},function(json) {
-            if (json.status == 1) {
-                 $mess.slideDown(500,function(){
-                                  $mess.css('display','block');
-                            }).html(json.mess);
-                setTimeout("location='{:Url('boards')}'",1200);
-            }else {
-                $mess.slideDown(500,function(){
-                                  $mess.css('display','block');
-                            }).html(json.mess);
-            }
-        })
-    }else {
-    return false;
-    }
-}
-$('.boardCoverEdit').click(function() {
-    var $bid = $('.boardbid').val();
-    var $mess = $('#mess');
-    $.post("{:Url('changecover')}",{bid:$bid},function(json) {
-        if (json.status == 1) {
-             $mess.slideDown(500,function(){
-                              $mess.css('display','block');
-                        }).html(json.mess);
-        }else {
-            $mess.slideDown(500,function(){
-                              $mess.css('display','block');
-                        }).html(json.mess);
+var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        effect: 'cube',
+        grabCursor: true,
+        cube: {
+            shadow: true,
+            slideShadows: true,
+            shadowOffset: 20,
+            shadowScale: 0.94
         }
-    })
-})
+    });
+// function del_confirm() {
+//     var r=confirm("Sure to delete this board?")
+//     if (r==true) {
+//         var $bid = $('.boardbid').val();
+//         var $mess = $('#mess');
+//         $.post("{:Url('delboard')}",{bid:$bid},function(json) {
+//             if (json.status == 1) {
+//                  $mess.slideDown(500,function(){
+//                                   $mess.css('display','block');
+//                             }).html(json.mess);
+//                 setTimeout("location='{:Url('boards')}'",1200);
+//             }else {
+//                 $mess.slideDown(500,function(){
+//                                   $mess.css('display','block');
+//                             }).html(json.mess);
+//             }
+//         })
+//     }else {
+//     return false;
+//     }
+// }
+// $('.boardCoverEdit').click(function() {
+//     var $bid = $('.boardbid').val();
+//     var $mess = $('#mess');
+//     $.post("{:Url('changecover')}",{bid:$bid},function(json) {
+//         if (json.status == 1) {
+//              $mess.slideDown(500,function(){
+//                               $mess.css('display','block');
+//                         }).html(json.mess);
+//         }else {
+//             $mess.slideDown(500,function(){
+//                               $mess.css('display','block');
+//                         }).html(json.mess);
+//         }
+//     })
+// })
 </script>
 
 </body>

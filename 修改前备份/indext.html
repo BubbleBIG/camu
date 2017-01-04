@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="_pub_/js/jquery.min.js"></script>
+    <script type="text/javascript" src="_pub_/js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input v-model="newTodo" v-on:keyup.enter="addTodo">
+    <ul>
+      <li v-for="todo in todos">
+        <span>{{ todo.text }}</span>
+        <button v-on:click="removeTodo(todo.id)">X</button>
+      </li>
+    </ul>
+  </div>
+<script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        newTodo: '',
+        todos: [
+          // { text: 'Add some todos' }
+        ]
+      },
+      created: function() {
+        this.getTodos();
+      },
+      methods: {
+        getTodos: function() {
+            let self = this
+            $.getJSON("http://localhost:3000/todos", function(json){
+                self.todos = json;
+            })
+            // fetch('http://localhost:3000/todos')
+            //   .then(res => res.json())
+            //   .then(function(todos) {
+            //     self.todos = todos;
+            //   })
+        },
+        addTodo: function () {
+          let self = this
+          var text = this.newTodo.trim()
+          if (text) {
+            $.post("{:Url('test')}",{text:text}, function(json){})
+            // fetch('http://localhost:3000/todos', {
+            //   method: 'POST',
+            //   headers: { 'Content-Type': 'application/json' },
+            //   body: JSON.stringify({ text })
+            // })
+              // .then(res => res.json())
+              .then(function(newTodo) {
+                self.todos.push(newTodo)
+                self.newTodo = ''
+              })
+          }
+        },
+        removeTodo: function (todoId) {
+          let self = this
+          fetch("http://localhost:3000/todos/" + todoId, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+          })
+          .then(function(res) {
+          if (res.status == 200) {
+            for (var i = self.todos.length - 1; i >= 0; i--) {
+
+              if (self.todos[i].id == todoId) {
+
+                self.todos.splice(i,1)
+              }
+            }
+          }
+          })
+        }
+      }
+    });
+  </script>
+</body>
+</html>

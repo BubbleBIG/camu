@@ -26,6 +26,11 @@ class Index extends Common
         $a->index1();
     return view('index2');
     }
+    public function indext() {
+        $a = new Index();
+        $a->index1();
+    return view('indext');
+    }
     public function user() {
         $uid = Session::get('uid');
         $u = db('user')->where('uid',$uid)->find();
@@ -214,9 +219,9 @@ class Index extends Common
         // return ['mess'=>$bid ];
         $imgforcover = db('img')->where($delb)->select();
         if ($imgforcover) {
-            return ['covers'=>$imgforcover];
+            return ['data'=>$imgforcover];
         }else {
-            return ['mess'=>$bid ];
+            return ['mess'=>'erro','status'=>1 ];
         }
     }
     public function delboard() {
@@ -246,8 +251,9 @@ class Index extends Common
         $this -> redirect('Login/');
     }
     public function test() {
-        // $id = $_POST['id'];
-        $boards = db('boards')->where('uid',Session::get('uid'))->order('bid desc')->select();
+        $text = $_POST['text'];
+        $data = array('text' => $text, );
+        $boards = db('test')->insert($data);
         return ['me'=>$boards];
     }
     public function test2() {
