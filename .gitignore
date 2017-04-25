@@ -8,3 +8,4 @@ build.php
 public/uploads
 public/temp
 public/tmp
+public/tmp*
