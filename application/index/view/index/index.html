@@ -13,7 +13,7 @@
     <div style="margin-top: 60px;padding: 20px;"><!-- session-user-id: {$data['uid']}  name:{$data['name']} --></div>
     <div id="container" class="waterfall-container">
         {foreach $img as $v}
-        <div class="item" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
+        <div class="item gradient-wrap" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
             <div style="max-height: 860px;overflow: hidden;position: relative;">
             <div class="hov">
             <button class="Button Module ShowModalButton btn hasIcon hasText isBrioFlat primary primaryOnHover repinSmall rounded">
@@ -28,7 +28,7 @@
             <div class="hov">
             <div class="footmes">hello world</div>
             </div>
-            <div class="baim">
+            <div class="baim" style="width: 200px">
                 <img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;">
             </div>
             </div>
@@ -39,7 +39,7 @@
         </div>
         {/foreach}
         {foreach $img as $v}
-        <div class="item" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
+        <div class="item gradient-wrap" style=" background: ; color: #555; width: 260px;border-radius: 8px;">
             <div style="max-height: 860px;overflow: hidden;position: relative;">
             <div class="hov">
             <button class="Button Module ShowModalButton btn hasIcon hasText isBrioFlat primary primaryOnHover repinSmall rounded">
@@ -54,7 +54,7 @@
             <div class="hov">
             <div class="footmes">hello world</div>
             </div>
-            <div class="baim">
+            <div class="baim" style="width: 200px">
                 <img src="_pub_/{$v.url}" style="width: 100%;overflow: hidden;border-radius: 8px;">
             </div>
             </div>
@@ -73,9 +73,9 @@
         </div>
     </div>
 <!-- <script src="_pub_/js/test/js/libs/jquery/jquery.js"></script> -->
-<script src="_pub_/js/test/js/libs/handlebars/handlebars.js"></script>
-<script src="_pub_/js/test/js/libs/jquery.easing.js"></script>
-<script src="_pub_/js/test/js/waterfall.min.js"></script>
+<!-- <script src="_pub_/js/test/js/libs/handlebars/handlebars.js"></script> -->
+<!-- <script src="_pub_/js/test/js/libs/jquery.easing.js"></script> -->
+<script src="_pub_/js/test/js/waterfall.js"></script>
 <script>
 $('#container').waterfall({
     itemCls: 'item',
@@ -93,4 +93,10 @@ $('#container').waterfall({
 
 </script>
 </body>
+<script src="_pub_/js/grade.js"></script>
+<script type="text/javascript">
+    $(function(){
+        Grade(document.querySelectorAll('.gradient-wrap'))
+    })
+</script>
 </html>

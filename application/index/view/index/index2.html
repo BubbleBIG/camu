@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OwO</title>
+    {block name="include"}{include file="public:header" /}{/block}
+    <!-- <meta name=viewport content="width=device-width, initial-scale=1"> -->
+    <!-- <script src="_pub_/js/zepto.js"></script> -->
+<!-- <script src="_pub_/js/jquery.waterfall.js"></script> -->
+<link rel=stylesheet href="_pub_/js/test/main.css">
+</head>
+<body>
+<div style="margin-top: 60px;padding: 20px;"><!-- session-user-id: {$data['uid']}  name:{$data['name']} --></div>
+    <div class="container">
+<div class="waterfall container">
+</div>
+</div>
+<script src="_pub_/js/test/vendor.js"></script>
+<script src="_pub_/js/test/bootstrap-waterfall.js"></script>
+<script id="waterfall-template" type="text/template">
+{foreach $img as $v}
+<ul class="list-group" style="">
+<li class="list-group-item">
+<a href="javascript:;">
+<img src="_pub_/{$v.url}" />
+</a>
+</li>
+<li class="list-group-item">
+<button type="button" class="btn btn-default btn-xs" title="thumb up">
+<span class="glyphicon glyphicon-thumbs-up"></span>
+</button>
+<button type="button" class="btn btn-default btn-xs" title="thumb down"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+<button type="button" class="btn btn-default btn-xs pull-right" title="pin"><span class="glyphicon glyphicon-pushpin"></span></button>
+</li>
+<li class="list-group-item"> <div class="media"> <div class="media-left"> <a href="javascript:;"> <img class="media-object img-rounded" style="width: 30px; height: 30px;" src="images/avatar_30.png" /> </a> </div> <div class="media-body"> <h5 class="media-heading">Bubble</h5> <small>I love this pin!</small> </div> </div> </li>
+</ul>
+{/foreach}
+</script>
+<script>
+      $('.waterfall')
+        .data('bootstrap-waterfall-template', $('#waterfall-template').html())
+        .waterfall();
+    </script>
+</body>
+</html>

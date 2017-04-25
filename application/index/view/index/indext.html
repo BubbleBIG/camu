@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="_pub_/js/jquery.min.js"></script>
+    <script type="text/javascript" src="_pub_/js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input v-model="newTodo" v-on:keyup.enter="addTodo">
+    <ul>
+      <li v-for="todo in todos">
+        <span>{{ todo.text }}</span>
+        <button v-on:click="removeTodo(todo.id)">X</button>
+      </li>
+    </ul>
+    <form name="form1" id="form1">
+        <p>name:<input type="text" name="name" ></p>
+        <p>gender:<input type="radio" name="gender" value="1">male <input type="radio" name="gender" value="2">female</p>
+        <p>photo:<input type="file" name="photo" id="photo"></p>
+        <p><input type="button" name="b1" value="submit" v-on:click="fsubmit"></p>
+    </form>
+  </div>
+  <form action="{Url('uploadPins')}" method="post" enctype="multipart/form-data">
+        <!-- <input type="text" name="firstname"> -->
+        <input type="file" id="file" name="file">
+        <input type="submit" id="submit" value="提交">
+    </form>
+    <script>
+        // document.getElementById('submit').onclick = function(event){
+        //     var iframe = document.createElement("iframe");
+        //     iframe.width = 0;
+        //     iframe.height = 0;
+        //     iframe.border = 0;
+        //     iframe.name = "form-iframe";
+        //     iframe.id = "form-iframe";
+        //     iframe.setAttribute("style", "width:0;height:0;border:none");
+        //     this.form.appendChild(iframe);
+        //     this.form.target = "form-iframe";
+        //     iframe.onload = function(){
+        //         var img = document.createElement("img");
+        //         var responseData = this.contentDocument.body.textContent || this.contentWindow.document.body.textContent;//获取iframe的内容，即服务返回的数据
+        //         var json = JSON.parse(responseData);//后端返回的json
+        //         console.log(json);
+        //         img.src = json.filename;
+        //         document.getElementsByTagName("form")[0].appendChild(img);//显示图片
+        //         setTimeout(function(){//删掉iframe
+        //             var _frame = document.getElementById("form-iframe");
+        //             _frame.parentNode.removeChild(_frame);
+        //         }, 100);
+        //     }
+        // }
+    </script>
+<script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        newTodo: '',
+        todos: [
+          // { text: 'Add some todos' }
+        ]
+      },
+      created: function() {
+        this.getTodos();
+      },
+      methods: {
+        fsubmit: function() {
+          var data = new FormData($('#form1')[0]);
+          fetch('http://localhost/camU/index/index/uploadPins.html', {
+            method: 'POST',
+            // headers: { 'Content-Type': 'application/json' },
+            body: data
+          })
+          .then(res => res.json())
+          .then(function (id) {
+            console.log(id)
+          })
+          .catch(err => console.log(err))
+        },
+        getTodos: function() {
+            let self = this
+            // $.getJSON("{:Url('test1')}", function(json){
+            //   console.log(json.me);
+            //     self.todos = json.me;
+            // })
+            fetch('{:Url("test1")}', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'same-origin'
+                })
+              .then(res => res.json())
+              .then(function(json) {
+                // console.log(json);
+                self.todos = json.me;
+              })
+            // fetch('http://localhost:3000/todos')
+            //   .then(res => res.json())
+            //   .then(function(todos) {
+            //     self.todos = todos;
+            //   })
+        },
+        addTodo: function () {
+          let self = this
+          var text = this.newTodo.trim()
+          // self.todos.push({ text: text })
+          if (text) {
+            $.post("{:Url('test')}",{text:text}, function(json){
+              if (json.status == 1)
+              var t = json.insert
+              console.log(json.insert)
+              a = self.todos.unshift({ text: json.insert }) //在数组开头插入新元素
+              // a = self.todos.push({ text: json.insert }) //在数组末尾插入新元素并返回数组长度
+              self.newTodo = ''
+            })
+            // fetch('http://localhost:3000/todos', {
+            //   method: 'POST',
+            //   headers: { 'Content-Type': 'application/json' },
+            //   body: JSON.stringify({ text })
+            // })
+              // .then(res => res.json())
+              // .then(function(text) {
+              //   // console.log(newTodo)
+              //   self.todos.push(text)
+              //   self.newTodo = ''
+              // })
+          }
+        },
+        removeTodo: function (todoId) {
+          let self = this
+          fetch("http://localhost:3000/todos/" + todoId, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+          })
+          .then(function(res) {
+          if (res.status === 200) {
+            for (var i = self.todos.length - 1; i >= 0; i--) {
+
+              if (self.todos[i].id === todoId) {
+
+                self.todos.splice(i,1)
+              }
+            }
+          }
+          })
+        }
+      },
+      watch: {
+        tod: function (e) {
+          this.getTodos()
+        }
+      }
+    });
+  </script>
+</body>
+</html>

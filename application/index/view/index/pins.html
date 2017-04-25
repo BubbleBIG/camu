@@ -79,7 +79,7 @@
     <div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="mModalLabel" aria-hidden="true">
       <div class="modal-dialog" style="height: 460px;width: 480px">
         <div class="modal-content">
-          <form  action="{:Url('uploadpin')}" enctype="multipart/form-data" method="post">
+          <form name="form01" action="{:Url('uploadpin')}" enctype="multipart/form-data" method="post">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <h1 class="modal-title" id="mModalLabel">Upload a Pin</h1>
@@ -89,7 +89,7 @@
                 <div style="" class="">
                     <!-- <button id="upImg" aria-label="Choose photo" class="Button Module btn hasText leftRounded primary large" type="submit"><span class="buttonText">Choose photo</span></button> -->
                     <input id="upI" title="file input" type="file" name="img" style="width: 350px;margin-right:20px; ">
-                    <button class="formFooterButton confirmButton Button Module btn hasText rounded primary" id="upImg" type="submit" style="">上传</button>
+                    <button class="formFooterButton confirmButton Button Module btn hasText rounded primary" id="_submit" type="submit" style="">上传</button>
                     <div id="mainpins" style="height: 345px;" v-cloak>
                         <div class="bar">
                             <label class="searchLabel">Choose Board</label>
@@ -105,6 +105,29 @@
                             </li>
                         </ul>
                         <script type="text/javascript">
+                            document.getElementById("_submit").onclick = function(event){
+   //取消掉默认的form提交方式
+   if(event.preventDefault) event.preventDefault();
+   else event.returnValue = false;       //对于IE的取消方式
+   var formDOM = document.getElementsByTagName("form");
+   //将form的DOM对象当作FormData的构造函数
+   var formData = new FormData(formDOM);
+   var req = new XMLHttpRequest();
+   req.open("POST", "uploadpin");
+   //请求完成
+   req.onload = function(){
+    // if(this.status === ){
+    //   //对请求成功的处理
+    // }
+   }
+   //将form数据发送出去
+   req.send(formData);
+　　　　　　 //避免内存泄漏
+　　　　　　 req = null;
+var img = document.createElement("img");
+     img.src = JSON.parse(this.responseText).path;
+     formDOM.insertBefore(img, document.getElementById("_submit"));
+ };
                             Vue.filter('searchFor', function (value, searchStr) {
                                 var result = [];
                                 if(!searchStr){
@@ -163,14 +186,14 @@
       </div>
     </div>
 </div>
-<div class="aaa">
+<!-- <div class="aaa">
 <div>
   <input type="radio" id="nba" name="sport" value="nba">
   <label name="nba" for="nba">NBA</label>
   <input type="radio" id="cba" name="sport" value="cba">
   <label name="cba" for="cba">CBA</label>
 </div>
-</div>
+</div> -->
 <script src="_pub_/js/test/js/waterfall.min.js"></script>
 <script type="text/javascript">
 $('#container').waterfall({
