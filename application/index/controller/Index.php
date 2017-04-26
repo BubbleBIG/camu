@@ -305,11 +305,21 @@ class Index
         $obj = array();
         $obj2 = array();
         $count = count($boards);
-        for($i=0;$i<$count;$i++) {
-            if($boards[$i]['cover']) {
+        for($i=0;$i<$count;$i++) { // 遍历每一个查询的结果
+            if($boards[$i]['cover']) { // 判断是否有封面cover，有
                 $img = db('img')->where('bid',$boards[$i]['bid'])->order('iid desc')->limit(2)->select();
-            } else {
+            } else { // 判断是否有封面cover，否
                 $img = db('img')->where('bid',$boards[$i]['bid'])->order('iid desc')->limit(6)->select();
+            }
+            $mapp['uid'] = $boards[$i]['uid'];
+            $mapp['bid'] = $boards[$i]['bid'];
+            $mapp['status'] = 1;
+            $inv = db('invite')->where($mapp)->find();
+            if($inv) { // 判断invite表是否存在符合要求的数据
+                $user = db('user')->where('uid',$uid)->find();
+                $boards[$i]['invited'] = 1;
+                $boards[$i]['name'] = $user['wname'];
+                $boards[$i]['uimg'] = $user['uimg'];
             }
             $boards[$i]['img'] = $img;
             $obj[$i] = $boards[$i];
@@ -320,20 +330,20 @@ class Index
         $map['status'] = 1;
         $invis = db('invite')->where($map)->order('invid desc')->select();
         $count = count($invis);
-        for($i=0;$i<$count;$i++) {
+        for($i=0;$i<$count;$i++) { // 遍历每一个查询的结果
             $boards = db('boards')->where('bid',$invis[$i]['bid'])->find();
                 // $obj[$i] = $boards[$i]+$img;
             // dump($obj,"<br>");
         // }
-        if($boards['secret']==='false') {
+        if($boards) { // 如果boards有在invite表中邀请状态status为1的数据项
             $boards['invited'] = 1;
             $user = db('user')->where('uid',$boards['uid'])->find();
             $boards['name'] = $user['wname'];
             $boards['uimg'] = $user['uimg'];
             $obj2[$i] = $boards;
-            if($obj2[$i]['cover']) {
+            if($obj2[$i]['cover']) { // 判断是否有封面cover，有
                 $img = db('img')->where('bid',$obj2[$i]['bid'])->order('iid desc')->limit(2)->select();
-            } else {
+            } else { // 判断是否有封面cover，无
                 $img = db('img')->where('bid',$obj2[$i]['bid'])->order('iid desc')->limit(6)->select();
             }
             $obj2[$i]['img'] = $img;
@@ -381,14 +391,15 @@ class Index
             // 'bdescription' => $_POST['description'],
             'secret' => $_POST['secret']
         );
-        if($_POST['description'] != 'null') {
+        if($_POST['description'] != 'null') { // 如果传入的description不为空才插入数据
             $data['bdescription'] = $_POST['description'];
         }
-        if($_POST['category'] != 'null') {
+        if($_POST['category'] != 'null') { // 如果传入的dcategory不为空才插入数据
             $data['category'] = $_POST['category'];
         }
         $checkName = db('boards')->where('bname',$bname)->find();
         if($checkName['bid'] != $bid && $checkName['uid'] == $uid) {
+            // 如果没查到符合传入uid等于查询数据的uid的且传入的bid不等于查询的bid数据
             return json(['status' => 0]);
         } else {
             $info = db('boards')->where($data1)->update($data);
@@ -400,7 +411,14 @@ class Index
         // $uid = Session::get('uid');
         $uid = $_POST['id'];
         $imgb = db('img')->where('uid',$uid)->order('iid desc')->select();
-        $imgb = db('img')->where(1)->order('iid desc')->select();
+        // $imgb = db('img')->where(1)->order('iid desc')->select();
+        return json($imgb);
+    }
+    public function getpins1() {
+        // $uid = Session::get('uid');
+        $uid = $_POST['id'];
+        $imgb = db('bo_img')->where('uid','<>',$uid)->order('iid desc')->select();
+        // $imgb = db('img')->where(1)->order('iid desc')->select();
         return json($imgb);
     }
     public function getpin() {
@@ -414,61 +432,49 @@ class Index
         // $uid = $_POST['id'];
         $user = db('user')->where('wname',$uname)->find();
         if($user['uid'] == $_POST['id']) {
+        // 如果传入的uid等于传入的wname查询到的uid则判断为当前用户查询自己的相册数据
             $map['uid'] = $_POST['id'];
             $map['bname'] = $_POST['bname'];
             $board = db('boards')->where($map)->find();
-            if($board) {
-                $imgb = db('img')->where($map)->order('iid desc')->select();
+            if($board) { // 如果用户存在这样额相册则返回查询数据,否则返回错误信息
+                $imgb = db('img')->where('bid',$board['bid'])->order('iid desc')->select();
                 $board['name'] = $user['uname'];
                 $board['img'] = $user['uimg'];
                 return json(['status'=>1,'pins'=>$imgb,'board'=>$board]);
             } else {
                 return json(['status'=>0,'pins'=>0,'board'=>0]);
-                // $bname = db('boards')->where('bname',$_POST['bname'])->order('bid desc')->select();
-                // $obj = array();
-                // $count = count($bname);
-                // $map2['inviteduid'] = $_POST['id'];
-                // for($i=0;$i<$count;$i++){
-                //     $map2['bid'] = $bname[$i]['bid'];
-                //     $inv = db('invite')->where($map2)->find();
-                // }
-                // if($inv['status'] == 1) {
-                //     $da['uid'] = $inv['uid'];
-                //     $da['bid'] = $inv['bid'];
-                //     $bo = db('boards')->where($da)->find();
-                //     return json(['status'=>2,'pins'=>1,'board'=>1]);
-                // } else {
-                //     return json(['status'=>0,'pins'=>0,'board'=>0]);
-                // }
             }
-        } else {
+        } else { // 当前用户查询他人的相册数据
             $map['uid'] = $user['uid'];
             $map['bname'] = $_POST['bname'];
             $board = db('boards')->where($map)->find();
-            if($board) {
+            if($board) { // 如果被查询用户存在这样额相册则返回查询数据,否则返回错误信息
                 $map2['uid'] = $user['uid'];
                 $map2['inviteduid'] = $_POST['id'];
                 $map2['bid'] = $board['bid'];
                 $inv = db('invite')->where($map2)->find();
-                if($inv) {
-                    $da['uid'] = $inv['uid'];
+                if($inv) { // 如果该相册有当前用户被查询用户邀请记录，返回相应邀请信息
+                    // $da['uid'] = $inv['uid'];
                     $da['bid'] = $inv['bid'];
                     $bo = db('boards')->where($da)->find();
                     $imgb = db('img')->where($da)->order('iid desc')->select();
-                    if($inv['status'] == 1){
+                    if($inv['status'] == 1){ // 如果邀请的接受状态为真
                         $bo['invited'] = '1';
                     }
+                    // for($i=0;)
                     $bo['name'] = $user['uname'];
                     $bo['img'] = $user['uimg'];
                     return json(['status'=>2,'pins'=>$imgb,'board'=>$bo]);
-                } else {
+                } else { // 当前用户与被查询相册无任何联系的查询数据
                     $da['uid'] = $user['uid'];
                     $da['bname'] = $_POST['bname'];
                     $bo = db('boards')->where($da)->find();
+                    $bo['name'] = $user['uname'];
+                    $bo['img'] = $user['uimg'];
                     $imgb = db('img')->where($da)->order('iid desc')->select();
                     return json(['status'=>3,'pins'=>$imgb,'board'=>$bo]);
                 }
-            } else {
+            } else { // 不存在相册名
                 return json(['status'=>0,'pins'=>2,'board'=>2]);
             }
         }
@@ -807,6 +813,7 @@ class Index
                         $data2['fromuid'] = $uid;
                         $data2['touid'] = $check['uid'];
                         $data2['news'] = $bid;
+                        $data2['action'] = 'add';
                         $new = db('invitenews')->insert($data2);
                         return json(['status' => 1, 'mess'=>'success']);
                     } else {
@@ -816,6 +823,34 @@ class Index
             } else {
                 return json(['status' => 0, 'mess'=>'error']);
             }
+        }
+    }
+    public function removeinvite() {
+        $uid = $_POST['id'];
+        $bid = $_POST['bid'];
+        $toid = $_POST['toid'];
+        $data['inviteduid'] = $uid;
+        $data['bid'] = $bid;
+        $check = db('invite')->where($data)->delete();
+        if($check) {
+            $data1['fromuid'] = $toid;
+            $data1['touid'] = $uid;
+            $data1['news'] = $bid;
+            $data1['action'] = 'remove';
+            $info = db('invitenews')->insert($data1);
+            return json(['status' => 1,'mess'=>'success']);
+        } else {
+            return json(['status' => 0,'mess'=>'erro']);
+        }
+    }
+    public function getnewsnums() {
+        $id = $_POST['id'];
+        $info = db('invitenews')->where('touid',$id)->select();
+        if($info) {
+            $nums = count($info);
+            return json(['status'=>1,'nums'=>$nums]);
+        } else {
+            return json(['status'=>0]);
         }
     }
     public function checkuser() {
