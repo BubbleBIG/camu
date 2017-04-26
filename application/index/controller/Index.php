@@ -302,10 +302,9 @@ class Index
         // $uid = Session::get('uid');
         $uid = $_POST['id'];
         $boards = db('boards')->where('uid',$uid)->order('bid desc')->select();
-        // // dump($boards);
-        // return json($boards);
-        $count = count($boards);
         $obj = array();
+        $obj2 = array();
+        $count = count($boards);
         for($i=0;$i<$count;$i++) {
             if($boards[$i]['cover']) {
                 $img = db('img')->where('bid',$boards[$i]['bid'])->order('iid desc')->limit(2)->select();
@@ -314,6 +313,33 @@ class Index
             }
             $boards[$i]['img'] = $img;
             $obj[$i] = $boards[$i];
+                // $obj[$i] = $boards[$i]+$img;
+            // dump($obj,"<br>");
+        }
+        $map['inviteduid'] = $uid;
+        $map['status'] = 1;
+        $invis = db('invite')->where($map)->order('invid desc')->select();
+        $count = count($invis);
+        for($i=0;$i<$count;$i++) {
+            $boards = db('boards')->where('bid',$invis[$i]['bid'])->find();
+                // $obj[$i] = $boards[$i]+$img;
+            // dump($obj,"<br>");
+        // }
+        if($boards['secret']==='false') {
+            $boards['invited'] = 1;
+            $user = db('user')->where('uid',$boards['uid'])->find();
+            $boards['name'] = $user['wname'];
+            $boards['uimg'] = $user['uimg'];
+            $obj2[$i] = $boards;
+            if($obj2[$i]['cover']) {
+                $img = db('img')->where('bid',$obj2[$i]['bid'])->order('iid desc')->limit(2)->select();
+            } else {
+                $img = db('img')->where('bid',$obj2[$i]['bid'])->order('iid desc')->limit(6)->select();
+            }
+            $obj2[$i]['img'] = $img;
+            $j = count($obj);
+            $obj[$j+$i+1] = $obj2[$i];
+        }
                 // $obj[$i] = $boards[$i]+$img;
             // dump($obj,"<br>");
         }
@@ -384,30 +410,66 @@ class Index
         return json($imgb);
     }
     public function getboardpins() {
-        // $bname = $_POST['bname'];
+        $uname = $_POST['uname'];
         // $uid = $_POST['id'];
-        $map['uid'] = $_POST['id'];
-        $map['bname'] = $_POST['bname'];
-        $board = db('boards')->where($map)->find();
-        $bname = db('boards')->where('bname',$_POST['bname'])->order('bid desc')->select();
-        if($board) {
-            $imgb = db('img')->where($map)->order('iid desc')->select();
-            return json(['status'=>1,'pins'=>$imgb,'board'=>$board]);
-        } else {
-            $obj = array();
-            $count = count($bname);
-            $map2['inviteduid'] = $_POST['id'];
-            for($i=0;$i<$count;$i++){
-                $map2['bid'] = $bname[$i]['bid'];
-                $inv = db('invite')->where($map2)->find();
-            }
-            if($inv['status'] == 1) {
-                $da['uid'] = $inv['uid'];
-                $da['bid'] = $inv['bid'];
-                $bo = db('boards')->where($da)->find();
-                return json(['status'=>2,'pins'=>1,'board'=>$bo]);
+        $user = db('user')->where('wname',$uname)->find();
+        if($user['uid'] == $_POST['id']) {
+            $map['uid'] = $_POST['id'];
+            $map['bname'] = $_POST['bname'];
+            $board = db('boards')->where($map)->find();
+            if($board) {
+                $imgb = db('img')->where($map)->order('iid desc')->select();
+                $board['name'] = $user['uname'];
+                $board['img'] = $user['uimg'];
+                return json(['status'=>1,'pins'=>$imgb,'board'=>$board]);
             } else {
                 return json(['status'=>0,'pins'=>0,'board'=>0]);
+                // $bname = db('boards')->where('bname',$_POST['bname'])->order('bid desc')->select();
+                // $obj = array();
+                // $count = count($bname);
+                // $map2['inviteduid'] = $_POST['id'];
+                // for($i=0;$i<$count;$i++){
+                //     $map2['bid'] = $bname[$i]['bid'];
+                //     $inv = db('invite')->where($map2)->find();
+                // }
+                // if($inv['status'] == 1) {
+                //     $da['uid'] = $inv['uid'];
+                //     $da['bid'] = $inv['bid'];
+                //     $bo = db('boards')->where($da)->find();
+                //     return json(['status'=>2,'pins'=>1,'board'=>1]);
+                // } else {
+                //     return json(['status'=>0,'pins'=>0,'board'=>0]);
+                // }
+            }
+        } else {
+            $map['uid'] = $user['uid'];
+            $map['bname'] = $_POST['bname'];
+            $board = db('boards')->where($map)->find();
+            if($board) {
+                $map2['uid'] = $user['uid'];
+                $map2['inviteduid'] = $_POST['id'];
+                $map2['bid'] = $board['bid'];
+                $inv = db('invite')->where($map2)->find();
+                if($inv) {
+                    $da['uid'] = $inv['uid'];
+                    $da['bid'] = $inv['bid'];
+                    $bo = db('boards')->where($da)->find();
+                    $imgb = db('img')->where($da)->order('iid desc')->select();
+                    if($inv['status'] == 1){
+                        $bo['invited'] = '1';
+                    }
+                    $bo['name'] = $user['uname'];
+                    $bo['img'] = $user['uimg'];
+                    return json(['status'=>2,'pins'=>$imgb,'board'=>$bo]);
+                } else {
+                    $da['uid'] = $user['uid'];
+                    $da['bname'] = $_POST['bname'];
+                    $bo = db('boards')->where($da)->find();
+                    $imgb = db('img')->where($da)->order('iid desc')->select();
+                    return json(['status'=>3,'pins'=>$imgb,'board'=>$bo]);
+                }
+            } else {
+                return json(['status'=>0,'pins'=>2,'board'=>2]);
             }
         }
     }
@@ -687,22 +749,25 @@ class Index
     public function getinvite() {
         $uid = $_POST['id'];
         $bid = $_POST['bid'];
-        $data['uid'] = $uid;
+        $wname = $_POST['uname'];
+        $checkid = db('user')->where('wname',$wname)->find();
+        $data['uid'] = $checkid['uid'];
         $data['bid'] = $bid;
-        $data2['inviteduid'] = $uid;
-        $data2['bid'] = $bid;
         $check = db('invite')->where($data)->order('invid desc')->select();
-        $check2 = db('invite')->where($data2)->order('invid desc')->select();
-        if($check || $check2) {
-            if($check) {
-                return json(['status' => 1, 'mess'=>$check]);
-            } if($check2) {
-                return json(['status' => 1, 'mess'=>$check2]);
-            } else {
-                return json(['status' => 1, 'mess'=>1]);
+        if($check) {
+            $data['status'] = 1;
+            $check2 = db('invite')->where($data)->order('invid desc')->select();
+            $count2 = count($check);
+            for($i=0;$i<$count2;$i++) {
+                $img = db('user')->where('uid',$check[$i]['inviteduid'])->find();
+                if($img) {
+                    $check[$i]['img'] = $img['uimg'];
+                }
             }
+            $count = count($check2);
+            return json(['status' => 1,'count' => $count,'mess'=>$check]);
         } else {
-            return json(['status' => 0, 'mess'=>'erro']);
+            return json(['status' => 0, 'count' => 0,'mess'=>'erro']);
         }
     }
     public function invite() {
@@ -710,40 +775,56 @@ class Index
         $bid = $_POST['bid'];
         $name = $_POST['name'];
         $check = db('user')->where('uname',$name)->find();
-        if($check) {
-            $data['uid'] = $uid;
-            $data['inviteduid'] = $check['uid'];
-            $data['inviteduname'] = $check['uname'];
-            $data['bid'] = $bid;
-            $info = db('invite')->where($data)->order('invid desc')->find();
-            if($info) {
-                if($info['status'] == 1) {
-                    return json(['status' => 1, 'mess'=>'already']);
+        $bcheck= db('boards')->where('bid',$bid)->find();
+        if($check['uid'] == $bcheck['uid']) {
+            return json(['status' => 2, 'mess'=>'error']);
+        } else {
+            if($check) {
+                $data['uid'] = $bcheck['uid'];
+                $data['inviteduid'] = $check['uid'];
+                $data['inviteduname'] = $check['uname'];
+                $data['bid'] = $bid;
+                $info = db('invite')->where($data)->find();
+                if($info) {
+                    if($info['status'] == 1) {
+                        return json(['status' => 1, 'mess'=>'already']);
+                    } else {
+                        $count['count'] = $info['count']+1;
+                        // dump ($count);
+                        $co = db('invite')->where($data)->update($count);
+                        if($co) {
+                            return json(['status' => 1, 'mess'=>'success']);
+                        } else {
+                            json(['status' => 0, 'mess'=>'update error']);
+                        }
+                    }
                 } else {
-                    $count['count'] = $info['count']+1;
-                    // dump ($count);
-                    $co = db('invite')->where($data)->update($count);
-                    if($co) {
+                    $ncheck = db('user')->where('uid',$uid)->find();
+                    $data['inviteruid'] = $uid;
+                    $data['inviteruname'] = $ncheck['uname'];
+                    $insert = db('invite')->insert($data);
+                    if($insert) {
+                        $data2['fromuid'] = $uid;
+                        $data2['touid'] = $check['uid'];
+                        $data2['news'] = $bid;
+                        $new = db('invitenews')->insert($data2);
                         return json(['status' => 1, 'mess'=>'success']);
                     } else {
-                        json(['status' => 0, 'mess'=>'update error']);
+                        return json(['status' => 0, 'mess'=>'insert error']);
                     }
                 }
             } else {
-                // if
-                $insert = db('invite')->insert($data);
-                if($insert) {
-                    $data2['fromuid'] = $uid;
-                    $data2['touid'] = $check['uid'];
-                    $data2['news'] = $bid;
-                    $new = db('invitenews')->insert($data2);
-                    return json(['status' => 1, 'mess'=>'success']);
-                } else {
-                    return json(['status' => 0, 'mess'=>'insert error']);
-                }
+                return json(['status' => 0, 'mess'=>'error']);
             }
+        }
+    }
+    public function checkuser() {
+        $name = $_POST['name'];
+        $info = db('user')->where('wname',$name)->find();
+        if($info) {
+            return json(['status'=>1,'name'=>$name,'id'=>$info['uid']]);
         } else {
-            return json(['status' => 0, 'mess'=>'error']);
+            return json(['status'=>0]);
         }
     }
     public function unlinkDir() {
