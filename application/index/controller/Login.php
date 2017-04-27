@@ -106,6 +106,7 @@ class Login extends Controller
                     }
                 }
             } else {
+                $data['wname'] = $data2;
                 $user->insert($data);
                 return json(['message'=>'注册成功,正在跳转...','status'=>1]);
             }

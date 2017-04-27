@@ -795,14 +795,13 @@ class Index
                     if($info['status'] == 1) {
                         return json(['status' => 1, 'mess'=>'already']);
                     } else {
-                        $count['count'] = $info['count']+1;
-                        // dump ($count);
-                        $co = db('invite')->where($data)->update($count);
-                        if($co) {
-                            return json(['status' => 1, 'mess'=>'success']);
-                        } else {
-                            json(['status' => 0, 'mess'=>'update error']);
-                        }
+                        // $count['count'] = $info['count']+1;
+                        // $co = db('invite')->where($data)->update($count);
+                        // if($co) {
+                            return json(['status' => 1, 'mess'=>'dupe']);
+                        // } else {
+                        //     json(['status' => 0, 'mess'=>'update error']);
+                        // }
                     }
                 } else {
                     $ncheck = db('user')->where('uid',$uid)->find();
@@ -838,6 +837,9 @@ class Index
             $data1['news'] = $bid;
             $data1['action'] = 'remove';
             $info = db('invitenews')->insert($data1);
+            $data2['touid'] = $uid;
+            $data2['news'] = $bid;
+            $check2 = db('invitenews')->where($data2)->delete();
             return json(['status' => 1,'mess'=>'success']);
         } else {
             return json(['status' => 0,'mess'=>'erro']);
@@ -845,7 +847,9 @@ class Index
     }
     public function getnewsnums() {
         $id = $_POST['id'];
-        $info = db('invitenews')->where('touid',$id)->select();
+        $data['touid'] = $id;
+        $data['status'] = 0;
+        $info = db('invitenews')->where($data)->select();
         if($info) {
             $nums = count($info);
             return json(['status'=>1,'nums'=>$nums]);
@@ -853,11 +857,72 @@ class Index
             return json(['status'=>0]);
         }
     }
+    public function getnews() {
+        $id = $_POST['id'];
+        $data['touid'] = $id;
+        $data['status'] = 0;
+        $data['action'] = 'add';
+        $info = db('invitenews')->where($data)->order('innewsid desc')->select();
+        if($info) { // 如果有未阅读的消息
+            $nums = count($info);
+            for($i=0;$i<$nums;$i++) { // 遍历查询记录
+                $user = db('user')->where('uid',$info[$i]['fromuid'])->find();
+                $board = db('boards')->where('bid',$info[$i]['news'])->find();
+                if($user && $board) { // 只有两个查询都不为空时才返回查询数据
+                    $info[$i]['new'] = $board;
+                    $info[$i]['uname'] = $user['uname'];
+                    $info[$i]['wname'] = $user['wname'];
+                }
+            }
+            return json(['status'=>1,'mess'=>$info]);
+        } else {
+            return json(['status'=>0]);
+        }
+    }
+    public function handlenews() {
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+        $inv = db('invitenews')->where('innewsid',$id)->find();
+        if($inv) { // 如果查询信息存在
+            $data['inviteruid'] = $inv['fromuid'];
+            $data['inviteduid'] = $inv['touid'];
+            $data['bid'] =$inv['news'];
+            if($status == 1) { // 接受invite
+                $info = db('invite')->where($data)->update(['status'=>1]);
+                if($info) {
+                    $bo = db('boards')->where('bid',$inv['news'])->find();
+                    $del= db('invitenews')->where('innewsid',$id)->delete();
+                    return json(['status'=>1,'mess'=>$bo]);
+                } else {
+                    return json(['status'=>2,'mess'=>21]);
+                }
+            } else { // 拒绝invite
+                $info = db('invite')->where($data)->delete();
+                if($info) {
+                    $del= db('invitenews')->where('innewsid',$id)->delete();
+                    return json(['status'=>3,'mess'=>3]);
+                } else {
+                    return json(['status'=>2,'mess'=>22]);
+                }
+            }
+        } else {
+            return json(['status'=>0,'mess'=>0]);
+        }
+    }
     public function checkuser() {
         $name = $_POST['name'];
         $info = db('user')->where('wname',$name)->find();
         if($info) {
-            return json(['status'=>1,'name'=>$name,'id'=>$info['uid']]);
+            return json(['status'=>1,'uname'=>$info['uname'],'name'=>$name,'id'=>$info['uid']]);
+        } else {
+            return json(['status'=>0]);
+        }
+    }
+    public function getuname() {
+        $name = $_POST['name'];
+        $info = db('user')->where('wname',$name)->find();
+        if($info) {
+            return json(['status'=>1,'name'=>$info['uname']]);
         } else {
             return json(['status'=>0]);
         }
