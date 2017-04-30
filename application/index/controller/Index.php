@@ -421,10 +421,28 @@ class Index
         // $imgb = db('img')->where(1)->order('iid desc')->select();
         return json($imgb);
     }
+    public function getcategorypins() {
+        $uid = $_POST['id'];
+        $category= $_POST['category'];
+        $imgb = db('bo_img')
+        // $map['uid']  = ['<>',$uid];
+        // $map['category']  = $category;
+        ->where('uid','<>',$uid)
+        ->where('category',$category)->order('iid desc')->select();
+        // $imgb = db('img')->where(1)->order('iid desc')->select();
+        return json($imgb);
+    }
     public function getpin() {
-        // $uid = Session::get('uid');
         $iid = $_POST['iid'];
+        $data['iid'] = $iid;
+        $data['uid'] = $_POST['id'];
+        $check = db('likes')->where($data)->find();
         $imgb = db('img')->where('iid',$iid)->find();
+        $board = db('boards')->where('bid',$imgb['bid'])->find();
+        if($check) {
+            $imgb['pinsave'] = 1;
+        }
+        $imgb['category'] = $board['category'];
         return json($imgb);
     }
     public function getboardpins() {
@@ -789,6 +807,7 @@ class Index
                 $data['uid'] = $bcheck['uid'];
                 $data['inviteduid'] = $check['uid'];
                 $data['inviteduname'] = $check['uname'];
+                $data['invitedwname'] = $check['wname'];
                 $data['bid'] = $bid;
                 $info = db('invite')->where($data)->find();
                 if($info) {
@@ -882,7 +901,9 @@ class Index
     public function handlenews() {
         $id = $_POST['id'];
         $status = $_POST['status'];
-        $inv = db('invitenews')->where('innewsid',$id)->find();
+        $da['news'] = $_POST['bid'];
+        $da['touid'] = $id;
+        $inv = db('invitenews')->where($da)->find();
         if($inv) { // 如果查询信息存在
             $data['inviteruid'] = $inv['fromuid'];
             $data['inviteduid'] = $inv['touid'];
@@ -891,7 +912,7 @@ class Index
                 $info = db('invite')->where($data)->update(['status'=>1]);
                 if($info) {
                     $bo = db('boards')->where('bid',$inv['news'])->find();
-                    $del= db('invitenews')->where('innewsid',$id)->delete();
+                    $del= db('invitenews')->where('innewsid',$inv['innewsid'])->delete();
                     return json(['status'=>1,'mess'=>$bo]);
                 } else {
                     return json(['status'=>2,'mess'=>21]);
@@ -899,7 +920,7 @@ class Index
             } else { // 拒绝invite
                 $info = db('invite')->where($data)->delete();
                 if($info) {
-                    $del= db('invitenews')->where('innewsid',$id)->delete();
+                    $del= db('invitenews')->where('innewsid',$inv['innewsid'])->delete();
                     return json(['status'=>3,'mess'=>3]);
                 } else {
                     return json(['status'=>2,'mess'=>22]);
@@ -926,6 +947,86 @@ class Index
         } else {
             return json(['status'=>0]);
         }
+    }
+    public function getsearch() {
+        if($_POST['word']) {
+            $word = '%'.$_POST['word'].'%';
+            $user = db('userview')->where('uname','like',$word)->limit(5)->select();
+            if($user) {
+                $u = $user;
+            } else {
+                $u = '';
+            }
+            $board = db('userboards')->where('bname','like',$word)->limit(5)->select();
+            if($board) {
+                $b = $board;
+            } else {
+                $b = '';
+            }
+            return json(['user'=>$u,'board'=>$b]);
+        } else {
+            return json(['user'=>'','board'=>'']);
+        }
+    }
+    public function getsearchboards() {
+        $uid = $_POST['id'];
+        $word = '%'.$_POST['word'].'%';
+        $boards = db('boards')->where('bname','like',$word)->select();        
+        $obj = array();
+        $obj2 = array();
+        $count = count($boards);
+        for($i=0;$i<$count;$i++) { // 遍历每一个查询的结果
+            if($boards[$i]['cover']) { // 判断是否有封面cover，有
+                $img = db('img')->where('bid',$boards[$i]['bid'])->order('iid desc')->limit(2)->select();
+            } else { // 判断是否有封面cover，否
+                $img = db('img')->where('bid',$boards[$i]['bid'])->order('iid desc')->limit(6)->select();
+            }
+            $mapp['uid'] = $boards[$i]['uid'];
+            $mapp['bid'] = $boards[$i]['bid'];
+            $mapp['status'] = 1;
+            $inv = db('invite')->where($mapp)->find();
+            $user = db('user')->where('uid',$boards[$i]['uid'])->find();
+            $boards[$i]['name'] = $user['wname'];
+            $boards[$i]['uimg'] = $user['uimg'];
+            if($inv) { // 判断invite表是否存在符合要求的数据
+                // $user = db('user')->where('uid',$boards[$i]['uid'])->find();
+                $boards[$i]['invited'] = 1;
+                // $boards[$i]['name'] = $user['wname'];
+                // $boards[$i]['uimg'] = $user['uimg'];
+            }
+            $boards[$i]['img'] = $img;
+            $obj[$i] = $boards[$i];
+                // $obj[$i] = $boards[$i]+$img;
+            // dump($obj,"<br>");
+        }
+        // $map['inviteduid'] = $uid;
+        // $map['status'] = 1;
+        // $invis = db('invite')->where($map)->order('invid desc')->select();
+        // $count = count($invis);
+        // for($i=0;$i<$count;$i++) { // 遍历每一个查询的结果
+        //     $boards = db('boards')->where('bid',$invis[$i]['bid'])->find();
+        //         // $obj[$i] = $boards[$i]+$img;
+        //     // dump($obj,"<br>");
+        // // }
+        // if($boards) { // 如果boards有在invite表中邀请状态status为1的数据项
+        //     $boards['invited'] = 1;
+        //     $user = db('user')->where('uid',$boards['uid'])->find();
+        //     $boards['name'] = $user['wname'];
+        //     $boards['uimg'] = $user['uimg'];
+        //     $obj2[$i] = $boards;
+        //     if($obj2[$i]['cover']) { // 判断是否有封面cover，有
+        //         $img = db('img')->where('bid',$obj2[$i]['bid'])->order('iid desc')->limit(2)->select();
+        //     } else { // 判断是否有封面cover，无
+        //         $img = db('img')->where('bid',$obj2[$i]['bid'])->order('iid desc')->limit(6)->select();
+        //     }
+        //     $obj2[$i]['img'] = $img;
+        //     $j = count($obj);
+        //     $obj[$j+$i+1] = $obj2[$i];
+        // }
+        //         // $obj[$i] = $boards[$i]+$img;
+        //     // dump($obj,"<br>");
+        // }
+        return json($obj);
     }
     public function unlinkDir() {
         $dir = ROOT_PATH .'/public/uploads/a0';
