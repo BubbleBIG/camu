@@ -213,10 +213,14 @@ class Index
         $iid = $_POST['iid'];
         $bid = $_POST['bid'];
         $cover = $_POST['cover'];
+        $url = db('img')->where('iid',$iid)->find();
+        $file = ROOT_PATH .$url['url'];
         $del = db('img')->where('iid',$iid)->delete();
-        $dele = db('like')->where('iid',$iid)->delete();
         if($del) {
+            unlink($file);
+            $dele = db('likes')->where('iid',$iid)->delete();
             $bcov = db('boards')->where('bid',$bid)->find();
+            $bcov = db('boards')->where('bid',$bid)->setDec('count');
             if($bcov['cover']==$cover) {
                 $up = db('boards')->where('bid',$bid)->update(['cover'=>'']);
             }
