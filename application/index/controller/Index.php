@@ -198,13 +198,31 @@ class Index
             }
             $delboard = db('boards')->where($delb)->delete();
             if ($delboard) {
-            return json(['mess'=>'successful!','status'=>1]);
+                $delinvite = db('invite')->where('bid',$bid)->delete();
+                $delnew = db('invitenews')->where('news',$bid)->delete();
+                return json(['mess'=>'successful!','status'=>1]);
             }else {
                 return json(['mess'=>'error!','status'=>0]);
             }
         } else {
             return json(['mess'=>'Warning! It is forbidden to del this board',
             'status'=>0]);
+        }
+    }
+    public function delpin() {
+        $iid = $_POST['iid'];
+        $bid = $_POST['bid'];
+        $cover = $_POST['cover'];
+        $del = db('img')->where('iid',$iid)->delete();
+        $dele = db('like')->where('iid',$iid)->delete();
+        if($del) {
+            $bcov = db('boards')->where('bid',$bid)->find();
+            if($bcov['cover']==$cover) {
+                $up = db('boards')->where('bid',$bid)->update(['cover'=>'']);
+            }
+            return json(['status'=>1]);
+        } else {
+            return json(['status'=>0]);
         }
     }
     public function test() {
@@ -354,6 +372,11 @@ class Index
             // dump($obj,"<br>");
         }
         return json($obj);
+    }
+    public function getboards1() {
+        $uid = $_POST['id'];
+         $boards = db('boards')->where('uid',$uid)->order('bid desc')->select();
+         return json($boards);
     }
     public function getboard() {
         // $uid = Session::get('uid');
@@ -649,6 +672,107 @@ class Index
             }
         } else {
             return json(['tag' => 0, 'mess' => 'error']);
+        }
+    }
+    public function savepinedit() {
+        $uid = $_POST['id'];
+        $bid = $_POST['bid'];
+        $bname = $_POST['bname'];
+        $iid = $_POST['iid'];
+        $url = $_POST['url'];
+        $ide = $_POST['idescription'];
+        $map['uid'] = $uid;
+        $map['bname'] = $bname;
+        $board = db('boards')->where($map)->find();
+        $img = db('img')->where('iid',$iid)->find();
+        if($board) { // 当查询存在时
+            if($board['bid']==$bid) { // 如果相等则说明没有改变bname，只需要更新idescription
+                if($ide) {
+                    if($ide!=$img['idescription']) {
+                        $img = db('img')->where('iid',$iid)->update(['idescription'=>$ide]);
+                        return json(['status'=>2]); // 只更新idescription
+                    } else {
+                        return json(['status'=>3]); // 因为相同，不更新
+                    }
+                } else {
+                    return json(['status'=>4]); // 因为null，不更新
+                }
+            } else {
+                $count = db('boards')->where('bid',$board['bid'])->setInc('count'); // 该board count数自增1
+                $oldboard = db('boards')->where('bid',$bid)->find();
+                if($oldboard['cover']==$url) {
+                    $da['cover'] = '';
+                    $da['count'] -= 1;
+                    $upd = db('boards')->where('bid',$bid)->update($da);
+                } else {
+                    $count2 = db('boards')->where('bid',$bid)->setDec('count'); // 该board count数自减1
+                }
+                $data['bid'] = $board['bid'];
+                $data['bname'] = $bname;
+                if($ide) {
+                    if($ide!=$img['idescription']) {
+                        $data['idescription'] = $ide;
+                        $img = db('img')->where('iid',$iid)->update($data);
+                        return json(['status'=>1]); // 更新idescription和bname
+                    } else {
+                        $img = db('img')->where('iid',$iid)->update($data);
+                        return json(['status'=>1]); // 因为相同，不更新idescription
+                    }
+                } else {
+                    $img = db('img')->where('iid',$iid)->update($data);
+                    return json(['status'=>4]); // 因为null，不更新idescription
+                }
+            }
+        } else { // 有可能是照片保存在他人共享的相册里
+            $boardother = db('boards')->where('bid',$bid)->find();
+            if($boardother['bname']==$bname) {
+                if($ide) {
+                    if($ide!=$img['idescription']) {
+                        $img = db('img')->where('iid',$iid)->update(['idescription'=>$ide]);
+                        return json(['status'=>2]); // 只更新idescription
+                    } else {
+                        return json(['status'=>3]); // 因为相同，不更新
+                    }
+                } else {
+                    return json(['status'=>4]); // 因为null，不更新
+                }
+            } else {
+                $in['inviteduid'] = $uid;
+                $inv = db('invite')->where($in)->select();
+                $cou = count($inv);
+                for($i=0;$i<$cou;$i++) {
+                    $n['bid']=$inv[$i]['bid'];
+                    $n['bname']=$bname;
+                    $boa = db('boards')->where($n)->find();
+                    if($boa) {
+                        $boco = db('boards')->where('bid',$bid)->find();
+                        if($boco['cover']==$url) {
+                            $da['cover'] = '';
+                            $da['count'] -= 1;
+                            $upd = db('boards')->where('bid',$bid)->update($da);
+                        } else {
+                            $count2 = db('boards')->where('bid',$bid)->setDec('count'); // 该board count数自减1
+                        }
+                        $bb = db('boards')->where('bid',$boa['bid'])->setInc('count');
+                        $data['bid'] = $boa['bid'];
+                        $data['bname'] = $bname;
+                        if($ide) {
+                            if($ide!=$img['idescription']) {
+                                $data['idescription'] = $ide;
+                                $img = db('img')->where('iid',$iid)->update($data);
+                                return json(['status'=>1]); // 更新idescription和bname
+                            } else {
+                                $img = db('img')->where('iid',$iid)->update($data);
+                                return json(['status'=>1]); // 因为相同，不更新idescription
+                            }
+                        } else {
+                            $img = db('img')->where('iid',$iid)->update($data);
+                            return json(['status'=>4]); // 因为null，不更新idescription
+                        }
+                    }
+                }
+            }
+                // return json(['status'=>0,'mess'=>'You are leave the '.$bname.' update error!']);
         }
     }
     public function getuserinfo() {
