@@ -524,6 +524,17 @@ class Index
             }
         }
     }
+    public function getpinslike() {
+        $uid = $_POST['id'];
+        $like = db('likes')->where('uid',$uid)->order('lid desc')->select();
+        $count = count($like);
+        $imgb = array();
+        for($i=0;$i<$count;$i++) {
+            $img = db('img')->where('iid',$like[$i]['iid'])->find();
+            $imgb[$i]=$img;
+        }
+        return json($imgb);
+    }
     public function uploadPins1() {
         // $uid = Session::get('uid');
         // $name = isset($_POST['name'])? $_POST['name'] : '';
