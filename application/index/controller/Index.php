@@ -190,9 +190,11 @@ class Index
                     $file = ROOT_PATH .$url['url'];
                     unlink($file);
                     $delboardpin = db('img')->where('url',$url['url'])->delete();
+                    $delh = db('imghash')->where('url',$url['url'])->delete();
                     // db('boards')->where('bid',$bid)->setDec('count',1);
                 } else {
                     $delboardpin = db('img')->where('url',$url['url'])->delete();
+                    $delh = db('imghash')->where('url',$url['url'])->delete();
                     // db('boards')->where('bid',$bid)->setDec('count',1);
                 }
             }
@@ -219,8 +221,9 @@ class Index
         if($del) {
             unlink($file);
             $dele = db('likes')->where('iid',$iid)->delete();
+            $delh = db('imghash')->where('iid',$iid)->delete();
             $bcov = db('boards')->where('bid',$bid)->find();
-            $bcov = db('boards')->where('bid',$bid)->setDec('count');
+            $bco = db('boards')->where('bid',$bid)->setDec('count');
             if($bcov['cover']==$cover) {
                 $up = db('boards')->where('bid',$bid)->update(['cover'=>'']);
             }
@@ -444,7 +447,8 @@ class Index
     public function getpins1() {
         // $uid = Session::get('uid');
         $uid = $_POST['id'];
-        $imgb = db('bo_img')->where('uid','<>',$uid)->order('iid desc')->select();
+
+        $imgb = db('bo_img')->where('uid','<>',$uid)->where('secret','false')->order('iid desc')->select();
         // $imgb = db('img')->where(1)->order('iid desc')->select();
         return json($imgb);
     }
@@ -454,7 +458,7 @@ class Index
         $imgb = db('bo_img')
         // $map['uid']  = ['<>',$uid];
         // $map['category']  = $category;
-        ->where('uid','<>',$uid)
+        ->where('uid','<>',$uid)->where('secret','false')
         ->where('category',$category)->order('iid desc')->select();
         // $imgb = db('img')->where(1)->order('iid desc')->select();
         return json($imgb);
@@ -556,13 +560,19 @@ class Index
     public function uploadpintmp(){
         // 获取表单上传文件 例如上传了001.jpg
         $file = request()->file('photo');
-        if($file !== NULL) {
+        if($file != NULL) {
         $info = $file->rule('uniqid')->move(ROOT_PATH . 'public/tmp/');
         if($info){
             $url = str_replace('\\','/',$info->getSaveName());
             $un = ('tmp'."/").$url;
             $unn = ('/public/tmp'."/").$info->getSaveName();
-            return json(['status' => 1, 'url' => $unn]);
+            $hash = md5_file(ROOT_PATH . $unn);
+            $find = db('imghash')->where('hash',$hash)->find();
+            if($find) {
+                $hash = '';
+                // $unn = $find['url'];
+            }
+            return json(['status' => 1, 'url' => $unn,'hash' => $hash,'img' => $find]);
         }else{
             return json(['status' => 0]);
         }
@@ -585,8 +595,8 @@ class Index
             'iswebsite' => $iswebsite,
             'idescription' => $idescription
             );
-        if($data !== NULL) {
-            if($url !== NULL && $iswebsite == 0) {
+        if($data != NULL) {
+            if($url != NULL && $iswebsite == 0) {
                 $newurl = str_replace('tmp','temp',$url);
                 $data['url'] = $newurl;
                 // return json([$data]);
@@ -594,12 +604,19 @@ class Index
                 $newFile = ROOT_PATH .$newurl; //新目录
                 copy($file,$newFile); //拷贝到新目录
                 unlink($file); //删除旧目录下的文件
+                $hash = md5_file($newFile);
                 $info = db('img')->insertGetId($data); //获取自增id
                 if($info) {
                     $count = db('boards')
                     ->where('bid',$bid)
                     ->setInc('count',1); //count自增1
                     if($count) {
+                        $h['uid'] = $uid;
+                        $h['iid'] = $info;
+                        $h['url'] = $newurl;
+                        $h['bid'] = $bid;
+                        $h['hash'] = $hash;
+                        $ha = db('imghash')->insert($h);
                         return json(['status' => 1, 'mess' => 'success!', 'iid' => $info]);
                     } else {
                         return json(['tag' => 3,'status' => 0]);
@@ -610,6 +627,12 @@ class Index
             } else {
                 $info = db('img')->insertGetId($data);
                 if($info) {
+                    $h['uid'] = $uid;
+                    $h['iid'] = $info;
+                    $h['url'] = $newurl;
+                    $h['bid'] = $bid;
+                    $h['hash'] = $hash;
+                    $ha = db('imghash')->insert($h);
                     $count = db('boards')
                     ->where('bid',$bid)
                     ->setInc('count',1); //count自增1
@@ -644,8 +667,8 @@ class Index
             'oiid' => $_POST['iid']
         );
             // die;
-        if($data !== NULL) {
-            if($url !== NULL && $iswebsite == 0) {
+        if($data != NULL&&$url != NULL) {
+            if($url != NULL && $iswebsite == 0) {
                 $url = str_replace('http://localhost/camu','',$url);
                 $data['url'] = '/public/temp/'.uniqid().'.jpg';
                 // return json([$data]);
