@@ -1190,6 +1190,26 @@ class Index
         // }
         return json($obj);
     }
+    public function addmessage() {
+        $name = $_POST['username'];
+        $mess = $_POST['message'];
+        $data['username'] = $name;
+        $data['message'] = $mess;
+        $data['time'] = time();
+        $data['datetime'] = date("Y-m-d H:i:s");
+        $info = db('message')->insert($data);
+        if($info) {
+            return json(['status'=>1]);
+        } else {
+            return json(['status'=>0]);
+        }
+    }
+    public function getmessage() {
+        $info = db('message')->where(1)->order('id desc')->select();
+        $count = count($info);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        return json(['data'=>$info,'count'=>$count,'ip'=>$ip]);
+    }
     public function unlinkDir() {
         $dir = ROOT_PATH .'/public/uploads/a0';
          //先删除目录下的文件：

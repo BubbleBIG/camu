@@ -51,6 +51,11 @@ class Login extends Controller
             // dump($_SESSION['uid']);
             // $this->redirect('Index/index');
             // return ['data'=>$u,'message'=>'登陆成功,正在跳转...','status'=>1];
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $dataip['ip'] = $ip;
+            $dataip['time'] = time();
+            $dataip['datetime'] = date("Y-m-d H:i:s");
+            $dip = db('ip')->insert($dataip);
             $data = array(
                 // 'url'=> Cookie::get('refer'),
                 'data'=>$u,
